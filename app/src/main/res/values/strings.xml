@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">MovieReviewer</string>
+    <string name="who_am_i">Who am I</string>
+    <string name="iron_man_3">Iron Man 3</string>
+    <string name="accountent">Accountent</string>
 </resources>
