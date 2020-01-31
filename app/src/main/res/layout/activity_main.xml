@@ -72,7 +72,7 @@
                     android:layout_height="@dimen/PosterSize"
                     android:layout_margin="5dp"
                     android:scaleType="centerInside"
-                    android:src="@drawable/ironman3"
+                    android:src="@drawable/ironman"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -147,6 +147,12 @@
                     app:layout_constraintStart_toEndOf="@id/imgAccountent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <Button
+                android:id="@+id/btnInvitation"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Invite friend"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
