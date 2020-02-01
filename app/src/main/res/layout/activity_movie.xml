@@ -12,8 +12,10 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -22,34 +24,60 @@
             <TextView
                 android:id="@+id/txtTitleMovie"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="10dp"
                 android:textAlignment="center"
                 android:textSize="30sp"
-                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/chkAddToFavourite"
                 app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Who am I" />
 
+            <CheckBox
+                android:id="@+id/chkAddToFavourite"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:button="@drawable/checkbox_selector_star"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <ImageView
                 android:id="@+id/imgMovie"
-                android:layout_width="410dp"
-                android:layout_height="410dp"
+                android:layout_width="400dp"
+                android:layout_height="400dp"
+                android:layout_marginTop="10dp"
+
                 android:scaleType="centerCrop"
-                app:layout_constraintTop_toBottomOf="@id/txtTitleMovie"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txtTitleMovie"
                 tools:src="@drawable/who_am_i" />
 
             <TextView
                 android:id="@+id/txtMovieDescription"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/imgMovie"
                 android:layout_margin="10dp"
-                android:textSize="16sp"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/imgMovie"
                 tools:text="Some text" />
+
+            <EditText
+                android:id="@+id/etMovieComment"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:textSize="20sp"
+                android:hint="@string/film_comment_hint"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txtMovieDescription" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,5 +1,6 @@
 package dev.stive.moviereviewer
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -58,7 +59,6 @@ class MainActivity : AppCompatActivity() {
             txtIronMan.setTextColor(ContextCompat.getColor(this, R.color.colorMovieTouched))
             getAnswerFromExplicitIntent(txtIronMan.text as String, R.drawable.ironman)
         }
-        Log.i("MainActivity", "onCreate")
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -67,8 +67,6 @@ class MainActivity : AppCompatActivity() {
         outState.putInt(KEY_ACCOUNTENT, txtAccountent.currentTextColor)
         outState.putInt(KEY_IRON_MAN, txtIronMan.currentTextColor)
         outState.putInt(KEY_WHO_AM_I, txtWhoAmI.currentTextColor)
-
-        Log.i("MainActivity", "onSave")
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
@@ -86,12 +84,28 @@ class MainActivity : AppCompatActivity() {
         startActivityForResult(intent, OUR_REQUEST_CODE)
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == OUR_REQUEST_CODE) {
+            var movieComment: String? = null
+            var movieFavouriteFlag: Boolean? = null
+            if (resultCode == Activity.RESULT_OK) {
+                data?.let {
+                    movieComment = it.getStringExtra(MOVIE_COMMENT)
+                    movieFavouriteFlag = it.getBooleanExtra(MOVIE_FAVOURITE_STATE,false)
+                }
+            }
+            Log.i("MainActivity","User comment:$movieComment\n Liked:$movieFavouriteFlag")
+        }
+    }
+
     companion object {
         const val KEY_WHO_AM_I = "who_am_i"
         const val KEY_ACCOUNTENT = "accountent"
         const val KEY_IRON_MAN = "iron_man"
         const val MOVIE_DATA = "MovieDate"
         const val OUR_REQUEST_CODE = 42
-        const val DATA_FROM_EXPLICIT_INTENT = "ExplicitIntent"
+        const val MOVIE_COMMENT = "MovieComment"
+        const val MOVIE_FAVOURITE_STATE = "Favourite"
     }
 }

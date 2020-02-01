@@ -3,4 +3,5 @@
     <string name="who_am_i">Who am I</string>
     <string name="iron_man_3">Iron Man</string>
     <string name="accountent">Accountent</string>
+    <string name="film_comment_hint">Write your comment here</string>
 </resources>
