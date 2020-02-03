@@ -1,133 +1,95 @@
 package dev.stive.moviereviewer
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.content.DialogInterface
-import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
-import android.widget.TextView
+import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ShareCompat
-import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
 
-
-    private lateinit var btnWhoAmI: Button
-    private lateinit var btnAccountent: Button
-    private lateinit var btnIronMan: Button
-    private lateinit var btnInvitation: Button
-
-    private lateinit var txtWhoAmI: TextView
-    private lateinit var txtAccountent: TextView
-    private lateinit var txtIronMan: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        btnWhoAmI = findViewById(R.id.btnWhoAmI)
-        btnIronMan = findViewById(R.id.btnIronMan)
-        btnAccountent = findViewById(R.id.btnAccountent)
-        btnInvitation = findViewById(R.id.btnInvitation)
+        val lstTitleMovies = arrayListOf(
+            getString(R.string.who_am_i),
+            getString(R.string.iron_man_3),
+            getString(R.string.accountent),
+            getString(R.string.who_am_i),
+            getString(R.string.iron_man_3),
+            getString(R.string.accountent),
+            getString(R.string.who_am_i),
+            getString(R.string.iron_man_3),
+            getString(R.string.accountent)
+        )
 
-        txtWhoAmI = findViewById(R.id.txtWhoAmI)
-        txtIronMan = findViewById(R.id.txtIronMan)
-        txtAccountent = findViewById(R.id.txtAccountent)
+        val lstDescriptionMovie = arrayListOf(
+            getString(R.string.description_who_am_i_movie),
+            getString(R.string.description_iron_man_movie),
+            getString(R.string.description_accountent),
+            getString(R.string.description_who_am_i_movie),
+            getString(R.string.description_iron_man_movie),
+            getString(R.string.description_accountent),
+            getString(R.string.description_who_am_i_movie),
+            getString(R.string.description_iron_man_movie),
+            getString(R.string.description_accountent)
+        )
 
+        val lstImagePosterMovie = arrayListOf<Bitmap>(
+            BitmapFactory.decodeResource(getResources(), R.drawable.who_am_i),
+            BitmapFactory.decodeResource(getResources(), R.drawable.ironman),
+            BitmapFactory.decodeResource(getResources(), R.drawable.accountent),
+            BitmapFactory.decodeResource(getResources(), R.drawable.who_am_i),
+            BitmapFactory.decodeResource(getResources(), R.drawable.ironman),
+            BitmapFactory.decodeResource(getResources(), R.drawable.accountent),
+            BitmapFactory.decodeResource(getResources(), R.drawable.who_am_i),
+            BitmapFactory.decodeResource(getResources(), R.drawable.ironman),
+            BitmapFactory.decodeResource(getResources(), R.drawable.accountent)
+        )
 
-        btnInvitation.setOnClickListener {
-            val textInvitation = "Hi, I am using MovieReviewer and you to do this too)"
-            val mimeType = "text/plain"
-            ShareCompat.IntentBuilder.from(this)
-                .setType(mimeType)
-                .setChooserTitle("Invitation Sender")
-                .setText(textInvitation).startChooser()
-        }
-
-        btnWhoAmI.setOnClickListener {
-            txtWhoAmI.setTextColor(ContextCompat.getColor(this, R.color.colorMovieTitleTouched))
-            getAnswerFromExplicitIntent(txtWhoAmI.text as String, R.drawable.who_am_i)
-        }
-
-        btnAccountent.setOnClickListener {
-            txtAccountent.setTextColor(ContextCompat.getColor(this, R.color.colorMovieTitleTouched))
-            getAnswerFromExplicitIntent(txtAccountent.text as String, R.drawable.accountent)
-        }
-
-        btnIronMan.setOnClickListener {
-            txtIronMan.setTextColor(ContextCompat.getColor(this, R.color.colorMovieTitleTouched))
-            getAnswerFromExplicitIntent(txtIronMan.text as String, R.drawable.ironman)
-        }
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-
-        outState.putInt(KEY_ACCOUNTENT, txtAccountent.currentTextColor)
-        outState.putInt(KEY_IRON_MAN, txtIronMan.currentTextColor)
-        outState.putInt(KEY_WHO_AM_I, txtWhoAmI.currentTextColor)
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-        txtAccountent.setTextColor(savedInstanceState.getInt(KEY_ACCOUNTENT))
-        txtIronMan.setTextColor(savedInstanceState.getInt(KEY_IRON_MAN))
-        txtWhoAmI.setTextColor(savedInstanceState.getInt(KEY_WHO_AM_I))
-        Log.i("MainActivity", "onRestoreInstanceState")
-    }
-
-    private fun getAnswerFromExplicitIntent(movieName: String, imgRes: Int) {
-        // Passing value of "key"
-        val intent = Intent(this@MainActivity, ActivityMovie::class.java)
-        intent.putExtra(MOVIE_DATA, PassData(movieName, imgRes))
-        startActivityForResult(intent, OUR_REQUEST_CODE)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == OUR_REQUEST_CODE) {
-            var movieComment: String? = null
-            var movieFavouriteFlag: Boolean? = null
-            if (resultCode == Activity.RESULT_OK) {
-                data?.let {
-                    movieComment = it.getStringExtra(MOVIE_COMMENT)
-                    movieFavouriteFlag = it.getBooleanExtra(MOVIE_FAVOURITE_STATE,false)
-                }
-            }
-            Log.i("MainActivity","User comment:$movieComment\n Liked:$movieFavouriteFlag")
-        }
+        initRecyclerMovie(lstTitleMovies, lstDescriptionMovie, lstImagePosterMovie)
     }
 
     override fun onBackPressed() {
         showQuitDialog()
     }
 
-    fun showQuitDialog(){
+    fun showQuitDialog() {
         val alertDialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this)
         Log.i("action", "Show quit dialog")
 
-        val actionCancel = DialogInterface.OnClickListener { dialog, which -> dialog.dismiss()}
+        val actionCancel = DialogInterface.OnClickListener { dialog, which -> dialog.dismiss() }
 
-        val actionAccept = DialogInterface.OnClickListener { dialog, which -> finishAffinity()}
+        val actionAccept = DialogInterface.OnClickListener { dialog, which -> finishAffinity() }
 
         alertDialogBuilder.setMessage(getString(R.string.alert_dialog_quit_message))
         alertDialogBuilder.setTitle(getString(R.string.alert_dialog_quit_title))
         alertDialogBuilder.setNegativeButton("No", actionCancel)
-        alertDialogBuilder.setPositiveButton("Yes",actionAccept)
+        alertDialogBuilder.setPositiveButton("Yes", actionAccept)
         val dialog: AlertDialog = alertDialogBuilder.create()
         dialog.show()
     }
 
-    companion object {
-        const val KEY_WHO_AM_I = "who_am_i"
-        const val KEY_ACCOUNTENT = "accountent"
-        const val KEY_IRON_MAN = "iron_man"
-        const val MOVIE_DATA = "MovieDate"
-        const val OUR_REQUEST_CODE = 42
-        const val MOVIE_COMMENT = "MovieComment"
-        const val MOVIE_FAVOURITE_STATE = "Favourite"
+    fun initRecyclerMovie(
+        lstTitleMovies: List<String>,
+        lstDescriptionMovie: List<String>,
+        lstImagePosterMovie: List<Bitmap>
+    ) {
+        val recyclerView = findViewById<RecyclerView>(R.id.rvMovies)
+        val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        recyclerView.layoutManager = layoutManager
+        recyclerView.adapter = MovieAdapter(
+            LayoutInflater.from(this),
+            lstTitleMovies,
+            lstDescriptionMovie,
+            lstImagePosterMovie
+        )
     }
 }
