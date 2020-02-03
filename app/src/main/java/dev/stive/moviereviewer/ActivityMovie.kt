@@ -3,6 +3,9 @@ package dev.stive.moviereviewer
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import dev.stive.moviereviewer.MainActivity.Companion.MOVIE_DATA
@@ -47,11 +50,20 @@ class ActivityMovie : AppCompatActivity() {
         intent.putExtra(MainActivity.MOVIE_FAVOURITE_STATE,chkFavouriteMovie.isChecked())
         setResult(Activity.RESULT_OK, intent)
 
-        etMovieComment.setOnKeyListener { v, keyCode, event ->
-            if (v == etMovieComment)
+        etMovieComment.addTextChangedListener(object: TextWatcher{
+            override fun afterTextChanged(s: Editable?) {
                 intent.putExtra(MainActivity.MOVIE_COMMENT, etMovieComment.text.toString())
-            false
-        }
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                Log.i("MainActivity", "beforeTextChanged")
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                Log.i("MainActivity", "onTextChanged")
+            }
+
+        })
 
         chkFavouriteMovie.setOnClickListener {
             intent.putExtra(MainActivity.MOVIE_FAVOURITE_STATE, chkFavouriteMovie.isChecked)
