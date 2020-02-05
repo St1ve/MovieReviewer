@@ -2,6 +2,7 @@ package dev.stive.moviereviewer
 
 import android.app.AlertDialog
 import android.content.DialogInterface
+import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
@@ -83,7 +84,17 @@ class MainActivity : AppCompatActivity() {
         lstImagePosterMovie: List<Bitmap>
     ) {
         val recyclerView = findViewById<RecyclerView>(R.id.rvMovies)
-        val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+
+
+        val layoutManager: LinearLayoutManager
+
+        if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT){
+            layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        }
+        else {
+            layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        }
+
         recyclerView.layoutManager = layoutManager
         recyclerView.adapter = MovieAdapter(
             LayoutInflater.from(this),
