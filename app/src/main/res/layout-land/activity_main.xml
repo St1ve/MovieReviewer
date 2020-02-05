@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackgroundApp"
+    tools:context=".MainActivity">
+
+    <HorizontalScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imgWhoAmI"
+                android:layout_width="@dimen/PosterSizeLandscape"
+                android:layout_height="@dimen/PosterSizeLandscape"
+                android:layout_marginTop="5dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/who_am_i"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/brMovieTitles"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <TextView
+                android:id="@+id/txtWhoAmI"
+                style="@style/MovieTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:text="@string/who_am_i"
+                android:textAlignment="center"
+                android:textSize="26sp"
+                app:layout_constraintBottom_toTopOf="@id/imgIronMan"
+                app:layout_constraintEnd_toEndOf="@id/imgWhoAmI"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnWhoAmI"
+                style="@style/ButtonsMovieDetails"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/roboto_black"
+                android:text="@string/btn_movie_detail"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="@id/imgWhoAmI"
+                app:layout_constraintStart_toStartOf="@id/imgWhoAmI"
+                app:layout_constraintTop_toBottomOf="@id/imgWhoAmI" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imgIronMan"
+                android:layout_width="@dimen/PosterSizeLandscape"
+                android:layout_height="@dimen/PosterSizeLandscape"
+                android:layout_marginTop="5dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ironman"
+                app:layout_constraintStart_toEndOf="@id/imgWhoAmI"
+                app:layout_constraintTop_toBottomOf="@id/brMovieTitles"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <TextView
+                android:id="@+id/txtIronMan"
+                style="@style/MovieTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/iron_man_3"
+                android:textSize="26sp"
+                app:layout_constraintBottom_toTopOf="@id/imgIronMan"
+                app:layout_constraintEnd_toEndOf="@id/imgIronMan"
+                app:layout_constraintStart_toStartOf="@id/imgIronMan"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnIronMan"
+                style="@style/ButtonsMovieDetails"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="8dp"
+                android:text="@string/btn_movie_detail"
+
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="@id/imgIronMan"
+                app:layout_constraintStart_toStartOf="@id/imgIronMan"
+                app:layout_constraintTop_toBottomOf="@id/imgIronMan" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imgAccountent"
+                android:layout_width="@dimen/PosterSizeLandscape"
+                android:layout_height="@dimen/PosterSizeLandscape"
+                android:layout_marginTop="5dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/accountent"
+                app:layout_constraintStart_toEndOf="@id/imgIronMan"
+                app:layout_constraintTop_toBottomOf="@id/brMovieTitles"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <TextView
+                android:id="@+id/txtAccountent"
+                style="@style/MovieTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/accountent"
+                android:textAlignment="center"
+                android:textSize="26sp"
+                app:layout_constraintBottom_toTopOf="@id/imgAccountent"
+                app:layout_constraintEnd_toEndOf="@id/imgAccountent"
+                app:layout_constraintStart_toStartOf="@id/imgAccountent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnAccountent"
+                style="@style/ButtonsMovieDetails"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="8dp"
+                android:text="@string/btn_movie_detail"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="@id/imgAccountent"
+                app:layout_constraintStart_toStartOf="@id/imgAccountent"
+                app:layout_constraintTop_toBottomOf="@id/imgAccountent" />
+
+            <Button
+                android:id="@+id/btnInvitation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/button_invite_shape"
+                android:drawableEnd="@drawable/ic_share_black_24dp"
+                android:fontFamily="@font/roboto_light"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:text="@string/button_invite_friend"
+                android:textColor="@color/colorMovieTitleTouched"
+                android:textSize="26sp"
+                app:layout_constraintStart_toEndOf="@id/imgAccountent"
+                app:layout_constraintTop_toBottomOf="@id/imgAccountent" />
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/brMovieTitles"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="txtWhoAmI,txtIronMan,txtAccountent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </HorizontalScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -23,6 +23,7 @@
 
             <TextView
                 android:id="@+id/txtTitleMovie"
+                style="@style/MovieTitle"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="50dp"
@@ -50,8 +51,7 @@
                 android:layout_width="400dp"
                 android:layout_height="400dp"
                 android:layout_marginTop="10dp"
-
-                android:scaleType="centerCrop"
+                android:scaleType="centerInside"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/txtTitleMovie"
@@ -73,8 +73,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:textSize="20sp"
                 android:hint="@string/film_comment_hint"
+                android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/txtMovieDescription" />

@@ -1,6 +1,8 @@
 package dev.stive.moviereviewer
 
 import android.app.Activity
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -46,17 +48,17 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnWhoAmI.setOnClickListener {
-            txtWhoAmI.setTextColor(ContextCompat.getColor(this, R.color.colorMovieTouched))
+            txtWhoAmI.setTextColor(ContextCompat.getColor(this, R.color.colorMovieTitleTouched))
             getAnswerFromExplicitIntent(txtWhoAmI.text as String, R.drawable.who_am_i)
         }
 
         btnAccountent.setOnClickListener {
-            txtAccountent.setTextColor(ContextCompat.getColor(this, R.color.colorMovieTouched))
+            txtAccountent.setTextColor(ContextCompat.getColor(this, R.color.colorMovieTitleTouched))
             getAnswerFromExplicitIntent(txtAccountent.text as String, R.drawable.accountent)
         }
 
         btnIronMan.setOnClickListener {
-            txtIronMan.setTextColor(ContextCompat.getColor(this, R.color.colorMovieTouched))
+            txtIronMan.setTextColor(ContextCompat.getColor(this, R.color.colorMovieTitleTouched))
             getAnswerFromExplicitIntent(txtIronMan.text as String, R.drawable.ironman)
         }
     }
@@ -97,6 +99,26 @@ class MainActivity : AppCompatActivity() {
             }
             Log.i("MainActivity","User comment:$movieComment\n Liked:$movieFavouriteFlag")
         }
+    }
+
+    override fun onBackPressed() {
+        showQuitDialog()
+    }
+
+    fun showQuitDialog(){
+        val alertDialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this)
+        Log.i("action", "Show quit dialog")
+
+        val actionCancel = DialogInterface.OnClickListener { dialog, which -> dialog.dismiss()}
+
+        val actionAccept = DialogInterface.OnClickListener { dialog, which -> finishAffinity()}
+
+        alertDialogBuilder.setMessage(getString(R.string.alert_dialog_quit_message))
+        alertDialogBuilder.setTitle(getString(R.string.alert_dialog_quit_title))
+        alertDialogBuilder.setNegativeButton("No", actionCancel)
+        alertDialogBuilder.setPositiveButton("Yes",actionAccept)
+        val dialog: AlertDialog = alertDialogBuilder.create()
+        dialog.show()
     }
 
     companion object {

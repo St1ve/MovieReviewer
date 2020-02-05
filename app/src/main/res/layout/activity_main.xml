@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackgroundApp"
     tools:context=".MainActivity">
 
     <ScrollView
@@ -11,8 +12,10 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -25,8 +28,8 @@
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/imgWhoAmI"
-                    android:layout_width="@dimen/PosterSize"
-                    android:layout_height="@dimen/PosterSize"
+                    android:layout_width="@dimen/PosterSizePortrait"
+                    android:layout_height="@dimen/PosterSizePortrait"
                     android:layout_margin="5dp"
                     android:scaleType="centerInside"
                     android:src="@drawable/who_am_i"
@@ -35,14 +38,14 @@
 
                 <TextView
                     android:id="@+id/txtWhoAmI"
+                    style="@style/MovieTitle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
                     android:text="@string/who_am_i"
-                    android:textAlignment="center"
-                    android:textSize="20sp"
+                    android:textSize="26sp"
                     app:layout_constraintBottom_toTopOf="@id/btnWhoAmI"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/imgWhoAmI"
@@ -50,12 +53,14 @@
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnWhoAmI"
+                    style="@style/ButtonsMovieDetails"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="5dp"
                     android:layout_marginEnd="8dp"
-                    android:text="Details"
+                    android:fontFamily="@font/roboto_black"
+                    android:text="@string/btn_movie_detail"
+                    android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/imgWhoAmI" />
@@ -68,8 +73,8 @@
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/imgIronMan"
-                    android:layout_width="@dimen/PosterSize"
-                    android:layout_height="@dimen/PosterSize"
+                    android:layout_width="@dimen/PosterSizePortrait"
+                    android:layout_height="@dimen/PosterSizePortrait"
                     android:layout_margin="5dp"
                     android:scaleType="centerInside"
                     android:src="@drawable/ironman"
@@ -78,14 +83,14 @@
 
                 <TextView
                     android:id="@+id/txtIronMan"
+                    style="@style/MovieTitle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
                     android:text="@string/iron_man_3"
-                    android:textAlignment="center"
-                    android:textSize="20sp"
+                    android:textSize="26sp"
                     app:layout_constraintBottom_toTopOf="@id/btnIronMan"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/imgIronMan"
@@ -93,12 +98,15 @@
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnIronMan"
+                    style="@style/ButtonsMovieDetails"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="8dp"
-                    android:text="Details"
+                    android:text="@string/btn_movie_detail"
+
+                    android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/imgIronMan" />
@@ -111,8 +119,8 @@
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/imgAccountent"
-                    android:layout_width="@dimen/PosterSize"
-                    android:layout_height="@dimen/PosterSize"
+                    android:layout_width="@dimen/PosterSizePortrait"
+                    android:layout_height="@dimen/PosterSizePortrait"
                     android:layout_margin="5dp"
                     android:scaleType="centerInside"
                     android:src="@drawable/accountent"
@@ -121,6 +129,7 @@
 
                 <TextView
                     android:id="@+id/txtAccountent"
+                    style="@style/MovieTitle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -128,7 +137,7 @@
                     android:layout_marginEnd="8dp"
                     android:text="@string/accountent"
                     android:textAlignment="center"
-                    android:textSize="20sp"
+                    android:textSize="26sp"
                     app:layout_constraintBottom_toTopOf="@id/btnAccountent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/imgAccountent"
@@ -136,12 +145,14 @@
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnAccountent"
+                    style="@style/ButtonsMovieDetails"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="8dp"
-                    android:text="Details"
+                    android:text="@string/btn_movie_detail"
+                    android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/imgAccountent" />
@@ -152,7 +163,15 @@
                 android:id="@+id/btnInvitation"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Invite friend"/>
+                android:layout_margin="10dp"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                android:drawableEnd="@drawable/ic_share_black_24dp"
+                android:background="@drawable/button_invite_shape"
+                android:fontFamily="@font/roboto_light"
+                android:text="@string/button_invite_friend"
+                android:textColor="@color/colorMovieTitleTouched"
+                android:textSize="26sp" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
