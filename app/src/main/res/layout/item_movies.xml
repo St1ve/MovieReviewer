@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/txtTitleMovie"
+        style="@style/MovieTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintHorizontal_weight="2"
+        app:layout_constraintStart_toEndOf="@id/imgPosterMovie"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Movie Title" />
+
+    <ImageView
+        android:id="@+id/imgPosterMovie"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toStartOf="@id/txtTitleMovie"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/who_am_i" />
+
+    <TextView
+        android:id="@+id/txtDescriptionMovie"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:maxLines="6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imgPosterMovie"
+        app:layout_constraintTop_toBottomOf="@id/txtTitleMovie"
+        tools:text="Some description here we go agaign a;lskdjf;laksjdfl;kjasd;lkfja;lskdjf;lkasjdf;lkjasl;dkjfa;lskdjf;laskjdf;lkajsd;lfkjasa;slkdjf;laskjdfa;sldkfj;laskjdff;laksdjf;lkajsd;flkjas;lkdfas;ldkfj;alskjdfa;lksdjf;laksjdf;lkaalskjdf;laksjdf;lkajsd;flkjas;ldkfja;lskdjf;laksjdf;lkasjdf;lkjas;ldkfja;lskdjf;laksjdf" />
+
+    <Button
+        android:id="@+id/btnDetailMovie"
+        style="@style/ButtonsMovieDetails"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="@string/btn_movie_detail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imgPosterMovie"
+        app:layout_constraintTop_toBottomOf="@id/txtDescriptionMovie" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
