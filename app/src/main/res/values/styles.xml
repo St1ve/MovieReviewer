@@ -8,4 +8,16 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="MovieTitle">
+        <item name="android:textColor">#000</item>
+        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <style name="ButtonsMovieDetails">
+        <item name="android:background">@drawable/buttons_detail_shape</item>
+        <item name="android:textColor">@color/colorButtonText</item>
+        <item name="android:fontFamily">@font/roboto_black</item>
+    </style>
+
 </resources>
