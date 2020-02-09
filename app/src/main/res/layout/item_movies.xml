@@ -14,12 +14,23 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/chkAddToFavourite"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintHorizontal_weight="2"
         app:layout_constraintStart_toEndOf="@id/imgPosterMovie"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Movie Title" />
+
+    <CheckBox
+        android:id="@+id/chkAddToFavourite"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="20dp"
+        android:button="@drawable/selector_add_to_favourite_switcher"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/txtTitleMovie"
+        />
 
     <ImageView
         android:id="@+id/imgPosterMovie"
