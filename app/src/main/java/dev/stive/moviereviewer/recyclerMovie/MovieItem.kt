@@ -1,4 +1,4 @@
-package dev.stive.moviereviewer
+package dev.stive.moviereviewer.recyclerMovie
 
 import android.graphics.Bitmap
 import android.os.Parcelable
