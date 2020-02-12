@@ -77,7 +77,13 @@ class MoviesListFragment : Fragment() {
 
         adapter = MovieAdapter(
             LayoutInflater.from(context),
-            lstMovies
+            lstMovies,
+            false,
+            object: MovieAdapter.INotifyAdapterChanged {
+                override fun NotifyDelete(position:Int) {
+                    adapter.notifyItemRemoved(position)
+                }
+            }
         )
 
         view.findViewById<RecyclerView>(R.id.rvMovies).adapter = adapter

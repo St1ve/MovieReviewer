@@ -10,6 +10,7 @@ import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI.setupWithNavController
 import androidx.navigation.ui.onNavDestinationSelected
+import dev.stive.moviereviewer.recyclerMovie.MovieItem
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -19,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         if ((savedInstanceState != null) && (savedInstanceState.containsKey(KEY_LST_FAVOURITE_MOVIES))) {
-            lstMovieFavourite = savedInstanceState.getParcelable(KEY_LST_FAVOURITE_MOVIES)!!
+            lstMovieFavourite = savedInstanceState.getParcelableArrayList<MovieItem>(KEY_LST_FAVOURITE_MOVIES)!!
         }
 
         val navController = Navigation.findNavController(this, R.id.nav_host_fragment)
@@ -49,7 +50,7 @@ class MainActivity : AppCompatActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
-        outState.putParcelable(KEY_LST_FAVOURITE_MOVIES, lstMovieFavourite)
+        outState.putParcelableArrayList(KEY_LST_FAVOURITE_MOVIES, lstMovieFavourite)
         outState.putIntegerArrayList(KEY_LST_KEYS_MOVIES, lstKeysFavouriteMovies)
     }
 
@@ -75,7 +76,7 @@ class MainActivity : AppCompatActivity() {
     companion object {
         const val KEY_LST_FAVOURITE_MOVIES = "lstFavouriteMovies"
         const val KEY_LST_KEYS_MOVIES = "lstKeysFavouriteMovies"
-        var lstMovieFavourite = SparseArrayMovieItemParcebale()
+        var lstMovieFavourite = ArrayList<MovieItem>()
         var lstKeysFavouriteMovies = ArrayList<Int>()
     }
 

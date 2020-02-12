@@ -7,10 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import dev.stive.moviereviewer.MainActivity.Companion.lstKeysFavouriteMovies
 import dev.stive.moviereviewer.MainActivity.Companion.lstMovieFavourite
 import dev.stive.moviereviewer.recyclerMovie.MovieAdapter
-import dev.stive.moviereviewer.recyclerMovie.MovieItem
 
 /**
  * A simple [Fragment] subclass.
@@ -29,15 +27,15 @@ class MoviesFavouriteListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val lstMovies = ArrayList<MovieItem>()
-
-        for (key in lstKeysFavouriteMovies)
-            lstMovies.add(lstMovieFavourite.get(key))
-
-
         adapter = MovieAdapter(
             LayoutInflater.from(context),
-            lstMovies
+            lstMovieFavourite,
+            true,
+            object: MovieAdapter.INotifyAdapterChanged {
+                override fun NotifyDelete(position:Int) {
+                    adapter.notifyItemRemoved(position)
+                }
+            }
         )
 
         view.findViewById<RecyclerView>(R.id.rvFavouriteMovies)?.adapter = adapter
