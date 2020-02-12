@@ -12,16 +12,7 @@ import dev.stive.moviereviewer.recyclerMovie.MovieAdapter
 import dev.stive.moviereviewer.recyclerMovie.MovieItem
 
 class MoviesListFragment : Fragment() {
-
-    private var chFavouriteMovieStates: SparseBooleanArrayParcelable =
-        SparseBooleanArrayParcelable()
     private lateinit var adapter: MovieAdapter
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        retainInstance = true
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,11 +21,6 @@ class MoviesListFragment : Fragment() {
     ): View? {
         Log.d("Fragment", "OnCreateView")
         return inflater.inflate(R.layout.fragment_movies_list, container, false)
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        chFavouriteMovieStates = adapter.itemStateArray
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -91,8 +77,7 @@ class MoviesListFragment : Fragment() {
 
         adapter = MovieAdapter(
             LayoutInflater.from(context),
-            lstMovies,
-            chFavouriteMovieStates
+            lstMovies
         )
 
         view.findViewById<RecyclerView>(R.id.rvMovies).adapter = adapter

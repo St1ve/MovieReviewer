@@ -8,7 +8,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import dev.stive.moviereviewer.MainActivity.Companion.lstMovieFavourite
 import dev.stive.moviereviewer.R
-import dev.stive.moviereviewer.SparseBooleanArrayParcelable
 
 class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val titleTv: TextView = itemView.findViewById(R.id.txtTitleMovie)
@@ -16,26 +15,26 @@ class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val imagePosterTv: ImageView = itemView.findViewById(R.id.imgPosterMovie)
     val chMovieFavourite: CheckBox = itemView.findViewById(R.id.chkAddToFavourite)
 
-    fun bind(movieItem: MovieItem, position : Int, itemStateArray: SparseBooleanArrayParcelable) {
+    fun bind(movieItem: MovieItem, position : Int) {
         titleTv.text = movieItem.title
         descriptionTv.text = movieItem.description
         imagePosterTv.setImageBitmap(movieItem.poster)
 
-        chMovieFavourite.isChecked = itemStateArray.get(position)
-        Log.d("Favourite", "ViewHolder:$itemStateArray")
+//        Log.d("Favourite", "ViewHolder:$itemStateArray")
+
+        chMovieFavourite.isChecked = lstMovieFavourite.get(position) != null
 
         chMovieFavourite.setOnClickListener {
             if (chMovieFavourite.isChecked) {
-                lstMovieFavourite.add(movieItem)
-                itemStateArray.put(position,true)
+                lstMovieFavourite.put(position,movieItem)
             }
             else{
-                lstMovieFavourite.removeAt(lstMovieFavourite.indexOf(movieItem))
-                itemStateArray.put(position,false)
+                lstMovieFavourite.remove(position)
+                chMovieFavourite.isChecked = false
             }
 
             Log.d(
-                "ListFavouriteMovies", "List of favourite movies: ${lstMovieFavourite.size}"
+                "ListFavouriteMovies", "List of favourite movies: ${lstMovieFavourite.size()}"
             )
         }
     }

@@ -1,15 +1,11 @@
 package dev.stive.moviereviewer.recyclerMovie
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import dev.stive.moviereviewer.R
-import dev.stive.moviereviewer.SparseBooleanArrayParcelable
 
-class MovieAdapter(val inflater: LayoutInflater, val movieItem: List<MovieItem>,
-                   val itemStateArray: SparseBooleanArrayParcelable
-) : RecyclerView.Adapter<MovieViewHolder>(){
+class MovieAdapter(val inflater: LayoutInflater, val movieItem: List<MovieItem>) : RecyclerView.Adapter<MovieViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         return MovieViewHolder(
@@ -24,7 +20,7 @@ class MovieAdapter(val inflater: LayoutInflater, val movieItem: List<MovieItem>,
     override fun getItemCount() = movieItem.size
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        Log.d("Favourite", "MovieAdapter:$itemStateArray")
-        holder.bind(movieItem[position], position, itemStateArray)
+//        Log.d("Favourite", "MovieAdapter:$")
+        holder.bind(movieItem[position], position)
     }
 }

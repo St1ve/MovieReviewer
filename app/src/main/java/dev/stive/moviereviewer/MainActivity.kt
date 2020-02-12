@@ -4,17 +4,22 @@ import android.app.AlertDialog
 import android.content.DialogInterface
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import dev.stive.moviereviewer.recyclerMovie.MovieAdapter
-import dev.stive.moviereviewer.recyclerMovie.MovieItem
 
 class MainActivity : AppCompatActivity() {
-
-    private lateinit var adapter: MovieAdapter
-    private lateinit var chFavouriteMovieStates: SparseBooleanArrayParcelable
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        if((savedInstanceState!= null) && (savedInstanceState.containsKey(KEY_LST_FAVOURITE_MOVIES))){
+            lstMovieFavourite = savedInstanceState.getParcelable(KEY_LST_FAVOURITE_MOVIES)!!
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        outState.putParcelable(KEY_LST_FAVOURITE_MOVIES, lstMovieFavourite)
     }
 
     override fun onBackPressed() {
@@ -37,8 +42,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val KEY_LST_CHECKBOX_FAVOURITE = "chFavouriteMovies"
         const val KEY_LST_FAVOURITE_MOVIES = "lstFavouriteMovies"
-        var lstMovieFavourite = ArrayList<MovieItem>()
+        var lstMovieFavourite = SparseArrayMovieItemParcebale()
     }
+
 }
