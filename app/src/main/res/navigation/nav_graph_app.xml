@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/app_navigation"
+    app:startDestination="@+id/home_destination">
+    <fragment
+        android:id="@+id/favourite_movies_destination"
+        android:name="dev.stive.moviereviewer.MoviesFavouriteListFragment"
+        android:label="MoviesFavouriteListFragment" >
+        <action
+            android:id="@+id/action_favourite_movies_destination_to_home_destination"
+            app:destination="@id/home_destination" />
+    </fragment>
+    <fragment
+        android:id="@+id/home_destination"
+        android:name="dev.stive.moviereviewer.MoviesListFragment"
+        android:label="MoviesListFragment" >
+        <action
+            android:id="@+id/action_home_destination_to_favourite_movies_destination2"
+            app:destination="@id/favourite_movies_destination" />
+    </fragment>
+</navigation>

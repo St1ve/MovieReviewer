@@ -5,7 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import dev.stive.moviereviewer.R
 
-class MovieAdapter(val inflater: LayoutInflater, val movieItem: List<MovieItem>) : RecyclerView.Adapter<MovieViewHolder>(){
+class MovieAdapter(val inflater: LayoutInflater, val movieItem: List<MovieItem>) :
+    RecyclerView.Adapter<MovieViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         return MovieViewHolder(

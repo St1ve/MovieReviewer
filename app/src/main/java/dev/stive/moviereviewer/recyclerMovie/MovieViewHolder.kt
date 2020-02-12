@@ -6,6 +6,7 @@ import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import dev.stive.moviereviewer.MainActivity.Companion.lstKeysFavouriteMovies
 import dev.stive.moviereviewer.MainActivity.Companion.lstMovieFavourite
 import dev.stive.moviereviewer.R
 
@@ -27,9 +28,13 @@ class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         chMovieFavourite.setOnClickListener {
             if (chMovieFavourite.isChecked) {
                 lstMovieFavourite.put(position,movieItem)
+                lstKeysFavouriteMovies.add(position)
+
+                Log.d("lstMovies","value:${lstMovieFavourite}")
             }
             else{
                 lstMovieFavourite.remove(position)
+                lstKeysFavouriteMovies.remove(lstKeysFavouriteMovies.indexOf(position))
                 chMovieFavourite.isChecked = false
             }
 
