@@ -11,6 +11,9 @@
         <action
             android:id="@+id/action_favourite_movies_destination_to_home_destination"
             app:destination="@id/home_destination" />
+        <action
+            android:id="@+id/action_favourite_movies_destination_to_movie_detail_destination"
+            app:destination="@id/movie_detail_destination" />
     </fragment>
     <fragment
         android:id="@+id/home_destination"
@@ -19,5 +22,17 @@
         <action
             android:id="@+id/action_home_destination_to_favourite_movies_destination2"
             app:destination="@id/favourite_movies_destination" />
+        <action
+            android:id="@+id/action_home_destination_to_movie_detail_destination"
+            app:destination="@id/movie_detail_destination" />
+    </fragment>
+    <fragment
+        android:id="@+id/movie_detail_destination"
+        android:name="dev.stive.moviereviewer.MovieDetailFragment"
+        android:label="fragment_movie_detail"
+        tools:layout="@layout/fragment_movie_detail" >
+        <argument
+            android:name="movieData"
+            app:argType="dev.stive.moviereviewer.recyclerMovie.MovieItem" />
     </fragment>
 </navigation>

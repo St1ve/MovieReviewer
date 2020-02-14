@@ -6,7 +6,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import dev.stive.moviereviewer.recyclerMovie.MovieAdapter
 import dev.stive.moviereviewer.recyclerMovie.MovieItem
@@ -76,12 +78,21 @@ class MoviesListFragment : Fragment() {
         )
 
         adapter = MovieAdapter(
+            view,
             LayoutInflater.from(context),
             lstMovies,
             false,
-            object: MovieAdapter.INotifyAdapterChanged {
-                override fun NotifyDelete(position:Int) {
+            object : MovieAdapter.IMovieItemActions {
+                override fun NotifyDelete(position: Int) {
                     adapter.notifyItemRemoved(position)
+                }
+
+                override fun OpenMovieDetail(movieData:MovieItem) {
+                    val bundleMovieData: Bundle = bundleOf("movieData" to movieData)
+                    findNavController().navigate(
+                        R.id.action_home_destination_to_movie_detail_destination,
+                        bundleMovieData
+                    )
                 }
             }
         )
