@@ -32,6 +32,7 @@ class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         btnMovieDetail.setOnClickListener {
             iMovieItemActions.OpenMovieDetail(movieItem)
+
         }
 
         if (flagFavourite) {

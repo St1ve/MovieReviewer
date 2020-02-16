@@ -35,12 +35,12 @@ class MoviesFavouriteListFragment : Fragment() {
             LayoutInflater.from(context),
             lstMovieFavourite,
             true,
-            object: MovieAdapter.IMovieItemActions {
-                override fun NotifyDelete(position:Int) {
+            object : MovieAdapter.IMovieItemActions {
+                override fun NotifyDelete(position: Int) {
                     adapter.notifyItemRemoved(position)
                 }
 
-                override fun OpenMovieDetail(movieData:MovieItem) {
+                override fun OpenMovieDetail(movieData: MovieItem) {
                     val bundleMovieData: Bundle = bundleOf("movieData" to movieData)
                     findNavController().navigate(
                         R.id.action_favourite_movies_destination_to_movie_detail_destination,
@@ -50,6 +50,6 @@ class MoviesFavouriteListFragment : Fragment() {
             }
         )
 
-        view.findViewById<RecyclerView>(R.id.rvFavouriteMovies)?.adapter = adapter
+        view.findViewById<RecyclerView>(R.id.rvFavouriteMovies).adapter = adapter
     }
 }

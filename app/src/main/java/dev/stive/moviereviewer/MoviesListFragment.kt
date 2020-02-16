@@ -2,7 +2,6 @@ package dev.stive.moviereviewer
 
 import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,13 +20,11 @@ class MoviesListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.d("Fragment", "OnCreateView")
         return inflater.inflate(R.layout.fragment_movies_list, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("Fragment", "OnViewCreated")
 
         val lstMovies = arrayListOf(
             MovieItem(
@@ -87,7 +84,7 @@ class MoviesListFragment : Fragment() {
                     adapter.notifyItemRemoved(position)
                 }
 
-                override fun OpenMovieDetail(movieData:MovieItem) {
+                override fun OpenMovieDetail(movieData: MovieItem) {
                     val bundleMovieData: Bundle = bundleOf("movieData" to movieData)
                     findNavController().navigate(
                         R.id.action_home_destination_to_movie_detail_destination,
