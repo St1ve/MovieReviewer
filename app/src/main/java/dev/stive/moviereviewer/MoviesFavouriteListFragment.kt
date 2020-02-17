@@ -2,11 +2,13 @@ package dev.stive.moviereviewer
 
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import dev.stive.moviereviewer.MainActivity.Companion.KEY_MOVIE_DETAIL_DATA
 import dev.stive.moviereviewer.MainActivity.Companion.lstMovieFavourite
@@ -50,6 +52,9 @@ class MoviesFavouriteListFragment : Fragment() {
             }
         )
 
-        view.findViewById<RecyclerView>(R.id.rvFavouriteMovies).adapter = adapter
+        val rvMovieItemFavourite =  view.findViewById<RecyclerView>(R.id.rvFavouriteMovies)
+        rvMovieItemFavourite.adapter = adapter
+        if(resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
+            rvMovieItemFavourite.addItemDecoration(DividerItemDecoration(context,DividerItemDecoration.VERTICAL))
     }
 }

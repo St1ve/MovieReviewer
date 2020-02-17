@@ -1,11 +1,13 @@
 package dev.stive.moviereviewer
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import dev.stive.moviereviewer.recyclerMovie.MovieAdapter
 import dev.stive.moviereviewer.recyclerMovie.MovieItem
@@ -90,6 +92,9 @@ class MoviesListFragment : Fragment() {
             }
         )
 
-        view.findViewById<RecyclerView>(R.id.rvMovies).adapter = adapter
+        val rvMovieItem = view.findViewById<RecyclerView>(R.id.rvMovies)
+        rvMovieItem.adapter = adapter
+        if(resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
+            rvMovieItem.addItemDecoration(DividerItemDecoration(context,DividerItemDecoration.VERTICAL))
     }
 }

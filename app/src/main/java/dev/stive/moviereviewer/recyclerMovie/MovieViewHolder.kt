@@ -48,7 +48,6 @@ class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                         "Movie ${movieItem.title} was deleted from favourite",
                         Snackbar.LENGTH_SHORT
                     ).show()
-                    Log.d("lstMovies", "value:${lstMovieFavourite}")
                 }
             }
         } else {
