@@ -15,7 +15,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
-            app:layout_constraintBottom_toTopOf="@id/nav_host_fragment" />
+            app:layout_constraintBottom_toTopOf="@id/nav_host_fragment"
+            app:titleTextColor="@color/colorButtonText" />
 
         <fragment
             android:id="@+id/nav_host_fragment"

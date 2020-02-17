@@ -20,6 +20,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     private lateinit var drawer: DrawerLayout
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         val toolbar = findViewById<Toolbar>(R.id.toolBar)
         setSupportActionBar(toolbar)
 
-        val navController = Navigation.findNavController(this, R.id.nav_host_fragment)
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment)
         setupNavigationMenu(navController)
 
         if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT ){
@@ -73,13 +74,9 @@ class MainActivity : AppCompatActivity() {
         outState.putIntegerArrayList(KEY_LST_KEYS_MOVIES, lstKeysFavouriteMovies)
     }
 
-//    override fun onBackPressed() {
-//        if (drawer.isDrawerOpen(GravityCompat.START))
-//            drawer.closeDrawer(GravityCompat.START)
-//        else
-//            super.onBackPressed()
-//        showQuitDialog()
-//    }
+    override fun onBackPressed() {
+        showQuitDialog()
+    }
 
     fun showQuitDialog() {
         val alertDialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this)

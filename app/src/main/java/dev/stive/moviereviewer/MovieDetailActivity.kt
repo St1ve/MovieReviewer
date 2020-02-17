@@ -27,6 +27,9 @@ class MovieDetailActivity : AppCompatActivity() {
         imgMovie.setImageResource(dataFromMainActivity.resIdPoster)
 
         setSupportActionBar(toolbar)
+        toolbar.setNavigationOnClickListener {
+            onBackPressed()
+        }
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
     }
 }
