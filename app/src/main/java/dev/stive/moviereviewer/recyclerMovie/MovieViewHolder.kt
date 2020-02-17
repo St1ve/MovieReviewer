@@ -28,11 +28,10 @@ class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     ) {
         titleTv.text = movieItem.title
         descriptionTv.text = movieItem.description
-        imagePosterTv.setImageBitmap(movieItem.poster)
+        imagePosterTv.setImageResource(movieItem.resIdPoster)
 
         btnMovieDetail.setOnClickListener {
             iMovieItemActions.OpenMovieDetail(movieItem)
-
         }
 
         if (flagFavourite) {

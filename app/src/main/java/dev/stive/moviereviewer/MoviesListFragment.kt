@@ -1,13 +1,11 @@
 package dev.stive.moviereviewer
 
-import android.graphics.BitmapFactory
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import dev.stive.moviereviewer.recyclerMovie.MovieAdapter
 import dev.stive.moviereviewer.recyclerMovie.MovieItem
@@ -30,47 +28,47 @@ class MoviesListFragment : Fragment() {
             MovieItem(
                 getString(R.string.who_am_i),
                 getString(R.string.description_who_am_i_movie),
-                BitmapFactory.decodeResource(resources, R.drawable.who_am_i)
+                R.drawable.who_am_i
             ),
             MovieItem(
                 getString(R.string.accountent),
                 getString(R.string.description_accountent),
-                BitmapFactory.decodeResource(resources, R.drawable.accountent)
+                R.drawable.accountent
             ),
             MovieItem(
                 getString(R.string.iron_man_3),
                 getString(R.string.description_iron_man_movie),
-                BitmapFactory.decodeResource(resources, R.drawable.ironman)
+                R.drawable.ironman
             ),
             MovieItem(
                 getString(R.string.who_am_i),
                 getString(R.string.description_who_am_i_movie),
-                BitmapFactory.decodeResource(resources, R.drawable.who_am_i)
+                R.drawable.who_am_i
             ),
             MovieItem(
                 getString(R.string.accountent),
                 getString(R.string.description_accountent),
-                BitmapFactory.decodeResource(resources, R.drawable.accountent)
+                R.drawable.accountent
             ),
             MovieItem(
                 getString(R.string.iron_man_3),
                 getString(R.string.description_iron_man_movie),
-                BitmapFactory.decodeResource(resources, R.drawable.ironman)
+                R.drawable.ironman
             ),
             MovieItem(
                 getString(R.string.who_am_i),
                 getString(R.string.description_who_am_i_movie),
-                BitmapFactory.decodeResource(resources, R.drawable.who_am_i)
+                R.drawable.who_am_i
             ),
             MovieItem(
                 getString(R.string.accountent),
                 getString(R.string.description_accountent),
-                BitmapFactory.decodeResource(resources, R.drawable.accountent)
+                R.drawable.accountent
             ),
             MovieItem(
                 getString(R.string.iron_man_3),
                 getString(R.string.description_iron_man_movie),
-                BitmapFactory.decodeResource(resources, R.drawable.ironman)
+                R.drawable.ironman
             )
         )
 
@@ -85,11 +83,9 @@ class MoviesListFragment : Fragment() {
                 }
 
                 override fun OpenMovieDetail(movieData: MovieItem) {
-                    val bundleMovieData: Bundle = bundleOf("movieData" to movieData)
-                    findNavController().navigate(
-                        R.id.action_home_destination_to_movie_detail_destination,
-                        bundleMovieData
-                    )
+                    val intent: Intent = Intent(context, MovieDetailActivity::class.java)
+                    intent.putExtra(MainActivity.KEY_MOVIE_DETAIL_DATA,movieData)
+                    startActivity(intent)
                 }
             }
         )

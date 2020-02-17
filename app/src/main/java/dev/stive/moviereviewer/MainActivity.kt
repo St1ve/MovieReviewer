@@ -19,6 +19,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var drawer: DrawerLayout
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -38,7 +40,7 @@ class MainActivity : AppCompatActivity() {
             setupBottomNavigationMenu(navController)
         }
         else{
-            val drawer = findViewById<DrawerLayout>(R.id.main_drawer_layout)
+            drawer = findViewById<DrawerLayout>(R.id.main_drawer_layout)
             val toggle = ActionBarDrawerToggle(
                 this,
                 drawer,
@@ -71,9 +73,13 @@ class MainActivity : AppCompatActivity() {
         outState.putIntegerArrayList(KEY_LST_KEYS_MOVIES, lstKeysFavouriteMovies)
     }
 
-    override fun onBackPressed() {
-        showQuitDialog()
-    }
+//    override fun onBackPressed() {
+//        if (drawer.isDrawerOpen(GravityCompat.START))
+//            drawer.closeDrawer(GravityCompat.START)
+//        else
+//            super.onBackPressed()
+//        showQuitDialog()
+//    }
 
     fun showQuitDialog() {
         val alertDialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this)
@@ -91,6 +97,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
+        const val KEY_MOVIE_DETAIL_DATA = "MovieDetailData"
         const val KEY_LST_FAVOURITE_MOVIES = "lstFavouriteMovies"
         const val KEY_LST_KEYS_MOVIES = "lstKeysFavouriteMovies"
         var lstMovieFavourite = ArrayList<MovieItem>()
