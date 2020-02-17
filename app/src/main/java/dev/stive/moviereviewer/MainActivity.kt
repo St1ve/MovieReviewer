@@ -71,7 +71,6 @@ class MainActivity : AppCompatActivity() {
         super.onSaveInstanceState(outState)
 
         outState.putParcelableArrayList(KEY_LST_FAVOURITE_MOVIES, lstMovieFavourite)
-        outState.putIntegerArrayList(KEY_LST_KEYS_MOVIES, lstKeysFavouriteMovies)
     }
 
     override fun onBackPressed() {
@@ -98,7 +97,6 @@ class MainActivity : AppCompatActivity() {
         const val KEY_LST_FAVOURITE_MOVIES = "lstFavouriteMovies"
         const val KEY_LST_KEYS_MOVIES = "lstKeysFavouriteMovies"
         var lstMovieFavourite = ArrayList<MovieItem>()
-        var lstKeysFavouriteMovies = ArrayList<Int>()
     }
 
 }

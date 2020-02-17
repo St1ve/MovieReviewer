@@ -32,8 +32,6 @@ class MoviesFavouriteListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-
         adapter = MovieAdapter(
             view,
             LayoutInflater.from(context),

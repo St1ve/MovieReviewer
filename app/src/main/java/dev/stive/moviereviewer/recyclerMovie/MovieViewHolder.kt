@@ -1,6 +1,5 @@
 package dev.stive.moviereviewer.recyclerMovie
 
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.CheckBox
@@ -8,7 +7,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
-import dev.stive.moviereviewer.MainActivity.Companion.lstKeysFavouriteMovies
 import dev.stive.moviereviewer.MainActivity.Companion.lstMovieFavourite
 import dev.stive.moviereviewer.R
 
@@ -39,8 +37,7 @@ class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
             chMovieFavourite.setOnClickListener {
                 if (!chMovieFavourite.isChecked) {
-                    lstMovieFavourite.removeAt(position)
-                    lstKeysFavouriteMovies.removeAt(position)
+                    RemoveMovieFromFavourite(movieItem.id)
                     chMovieFavourite.isChecked = false
                     iMovieItemActions.NotifyDelete(position)
                     Snackbar.make(
@@ -51,30 +48,42 @@ class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 }
             }
         } else {
-            chMovieFavourite.isChecked = lstKeysFavouriteMovies.indexOf(position) != -1
+            chMovieFavourite.isChecked = CheckForFavourite(movieItem.id)
 
             chMovieFavourite.setOnClickListener {
                 if (chMovieFavourite.isChecked) {
                     lstMovieFavourite.add(movieItem)
-                    lstKeysFavouriteMovies.add(position)
-
                     Snackbar.make(
                         view,
                         "Movie ${movieItem.title} was added to favourite",
                         Snackbar.LENGTH_SHORT
                     ).show()
-                    Log.d("lstMovies", "value:${lstMovieFavourite}")
                 } else {
-                    val removePosition = lstKeysFavouriteMovies.indexOf(position)
-                    lstMovieFavourite.removeAt(removePosition)
-                    lstKeysFavouriteMovies.removeAt(removePosition)
-                    chMovieFavourite.isChecked = false
+                    RemoveMovieFromFavourite(movieItem.id)
                     Snackbar.make(
                         view,
                         "Movie ${movieItem.title} was deleted from favourite",
                         Snackbar.LENGTH_SHORT
                     ).show()
                 }
+            }
+        }
+    }
+
+    private fun CheckForFavourite(idMovie: Int):Boolean{
+        for (movie in lstMovieFavourite){
+            if (movie.id == idMovie){
+                return true
+            }
+        }
+        return false
+    }
+
+    private fun RemoveMovieFromFavourite(idMovie:Int){
+        for (movie in lstMovieFavourite){
+            if (movie.id == idMovie){
+                lstMovieFavourite.remove(movie)
+                return
             }
         }
     }

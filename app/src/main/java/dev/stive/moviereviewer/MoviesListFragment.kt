@@ -28,46 +28,55 @@ class MoviesListFragment : Fragment() {
 
         val lstMovies = arrayListOf(
             MovieItem(
+                0,
                 getString(R.string.who_am_i),
                 getString(R.string.description_who_am_i_movie),
                 R.drawable.who_am_i
             ),
             MovieItem(
+                1,
                 getString(R.string.accountent),
                 getString(R.string.description_accountent),
                 R.drawable.accountent
             ),
             MovieItem(
+                2,
                 getString(R.string.iron_man_3),
                 getString(R.string.description_iron_man_movie),
                 R.drawable.ironman
             ),
             MovieItem(
+                3,
                 getString(R.string.who_am_i),
                 getString(R.string.description_who_am_i_movie),
                 R.drawable.who_am_i
             ),
             MovieItem(
+                4,
                 getString(R.string.accountent),
                 getString(R.string.description_accountent),
                 R.drawable.accountent
             ),
             MovieItem(
+                5,
                 getString(R.string.iron_man_3),
                 getString(R.string.description_iron_man_movie),
                 R.drawable.ironman
             ),
             MovieItem(
+                6,
                 getString(R.string.who_am_i),
                 getString(R.string.description_who_am_i_movie),
                 R.drawable.who_am_i
             ),
             MovieItem(
+                7,
                 getString(R.string.accountent),
                 getString(R.string.description_accountent),
                 R.drawable.accountent
             ),
             MovieItem(
+                8,
                 getString(R.string.iron_man_3),
                 getString(R.string.description_iron_man_movie),
                 R.drawable.ironman
