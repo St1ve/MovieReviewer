@@ -11,11 +11,11 @@ import dev.stive.moviereviewer.MainActivity.Companion.lstMovieFavourite
 import dev.stive.moviereviewer.R
 
 class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    val titleTv: TextView = itemView.findViewById(R.id.txtTitleMovie)
-    val descriptionTv: TextView = itemView.findViewById(R.id.txtDescriptionMovie)
-    val imagePosterTv: ImageView = itemView.findViewById(R.id.imgPosterMovie)
-    val chMovieFavourite: CheckBox = itemView.findViewById(R.id.chkAddToFavourite)
-    val btnMovieDetail: Button = itemView.findViewById(R.id.btnDetailMovie)
+    private val titleTv: TextView = itemView.findViewById(R.id.txtTitleMovie)
+    private val descriptionTv: TextView = itemView.findViewById(R.id.txtDescriptionMovie)
+    private val imagePosterTv: ImageView = itemView.findViewById(R.id.imgPosterMovie)
+    private val chMovieFavourite: CheckBox = itemView.findViewById(R.id.chkAddToFavourite)
+    private val btnMovieDetail: Button = itemView.findViewById(R.id.btnDetailMovie)
 
     fun bind(
         view: View,
@@ -26,10 +26,10 @@ class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     ) {
         titleTv.text = movieItem.title
         descriptionTv.text = movieItem.description
-        imagePosterTv.setImageResource(movieItem.resIdPoster)
+        imagePosterTv.setImageBitmap(movieItem.poster)
 
         btnMovieDetail.setOnClickListener {
-            iMovieItemActions.OpenMovieDetail(movieItem)
+            iMovieItemActions.openMovieDetail(movieItem)
         }
 
         if (flagFavourite) {
@@ -37,9 +37,9 @@ class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
             chMovieFavourite.setOnClickListener {
                 if (!chMovieFavourite.isChecked) {
-                    RemoveMovieFromFavourite(movieItem.id)
+                    removeMovieFromFavourite(movieItem.id)
                     chMovieFavourite.isChecked = false
-                    iMovieItemActions.NotifyDelete(position)
+                    iMovieItemActions.notifyDelete(position)
                     Snackbar.make(
                         view,
                         "Movie ${movieItem.title} was deleted from favourite",
@@ -48,7 +48,7 @@ class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 }
             }
         } else {
-            chMovieFavourite.isChecked = CheckForFavourite(movieItem.id)
+            chMovieFavourite.isChecked = checkForFavourite(movieItem.id)
 
             chMovieFavourite.setOnClickListener {
                 if (chMovieFavourite.isChecked) {
@@ -59,7 +59,7 @@ class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                         Snackbar.LENGTH_SHORT
                     ).show()
                 } else {
-                    RemoveMovieFromFavourite(movieItem.id)
+                    removeMovieFromFavourite(movieItem.id)
                     Snackbar.make(
                         view,
                         "Movie ${movieItem.title} was deleted from favourite",
@@ -70,7 +70,7 @@ class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         }
     }
 
-    private fun CheckForFavourite(idMovie: Int):Boolean{
+    private fun checkForFavourite(idMovie: Int):Boolean{
         for (movie in lstMovieFavourite){
             if (movie.id == idMovie){
                 return true
@@ -79,7 +79,7 @@ class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         return false
     }
 
-    private fun RemoveMovieFromFavourite(idMovie:Int){
+    private fun removeMovieFromFavourite(idMovie:Int){
         for (movie in lstMovieFavourite){
             if (movie.id == idMovie){
                 lstMovieFavourite.remove(movie)

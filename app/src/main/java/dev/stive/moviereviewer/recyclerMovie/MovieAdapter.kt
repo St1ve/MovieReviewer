@@ -26,7 +26,7 @@ class MovieAdapter(val view: View, val inflater: LayoutInflater, val lstMoviesIt
     }
 
     interface IMovieItemActions {
-        fun NotifyDelete(position:Int)
-        fun OpenMovieDetail(movieData:MovieItem)
+        fun notifyDelete(position:Int)
+        fun openMovieDetail(movieData:MovieItem)
     }
 }
