@@ -2,6 +2,7 @@ package dev.stive.moviereviewer
 
 import android.content.res.Configuration
 import android.graphics.BitmapFactory
+import android.opengl.Visibility
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +19,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MoviesListFragment : Fragment() {
     private lateinit var adapter: MovieAdapter
+    private lateinit var mainActivity: AppCompatActivity
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,10 +31,6 @@ class MoviesListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        (activity as AppCompatActivity?)!!.supportActionBar!!.show()
-
-        (activity as AppCompatActivity?)!!.toolBar.setSubtitle("Movies")
 
         val lstMovies = arrayListOf(
             MovieItem(

@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import dev.stive.moviereviewer.MainActivity.Companion.lstMovieFavourite
 import dev.stive.moviereviewer.recyclerMovie.MovieAdapter
 import dev.stive.moviereviewer.recyclerMovie.MovieItem
+import kotlinx.android.synthetic.main.activity_main.*
 
 /**
  * A simple [Fragment] subclass.
@@ -32,8 +33,6 @@ class MoviesFavouriteListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        (activity as AppCompatActivity?)!!.supportActionBar!!.show()
 
         adapter = MovieAdapter(
             view,

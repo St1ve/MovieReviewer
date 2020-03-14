@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import com.google.android.material.appbar.CollapsingToolbarLayout
 import dev.stive.moviereviewer.recyclerMovie.MovieItem
 
 /**
@@ -31,7 +32,7 @@ class MovieDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val toolbar = view.findViewById<Toolbar>(R.id.movieDetailToolBar)
+        val toolbar = view.findViewById<Toolbar>(R.id.toolBarDetail)
 
         toolbar.setNavigationOnClickListener {
             activity?.onBackPressed()
@@ -46,11 +47,17 @@ class MovieDetailFragment : Fragment() {
         toolbar.title = movieData.title
         txtMovieDescription.text = movieData.description
         imgMoviePoster.setImageBitmap(movieData.poster)
+    }
 
-        (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
-//        val activity = (activity as AppCompatActivity?)
-//        activity?.supportActionBar
-//        activity?.setSupportActionBar(toolbar)
-//        activity?.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+    override fun onResume() {
+        super.onResume()
+        (activity as AppCompatActivity).supportActionBar?.hide()
+        Log.d("MovieDetailFragment", "onResume")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        (activity as AppCompatActivity).supportActionBar?.show()
+        Log.d("MovieDetailFragment", "onStop")
     }
 }
