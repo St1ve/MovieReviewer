@@ -7,7 +7,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
+import dev.stive.moviereviewer.MainActivity
 import dev.stive.moviereviewer.MainActivity.Companion.lstMovieFavourite
+import dev.stive.moviereviewer.MainActivity.Companion.removeMovieFromFavourite
 import dev.stive.moviereviewer.R
 
 class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -77,14 +79,5 @@ class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             }
         }
         return false
-    }
-
-    private fun removeMovieFromFavourite(idMovie:Int){
-        for (movie in lstMovieFavourite){
-            if (movie.id == idMovie){
-                lstMovieFavourite.remove(movie)
-                return
-            }
-        }
     }
 }

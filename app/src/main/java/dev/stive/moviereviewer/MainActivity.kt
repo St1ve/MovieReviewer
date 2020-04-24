@@ -99,6 +99,15 @@ class MainActivity : AppCompatActivity() {
         const val KEY_MOVIE_DETAIL_DATA = "MovieDetailData"
         const val KEY_LST_FAVOURITE_MOVIES = "lstFavouriteMovies"
         var lstMovieFavourite = ArrayList<MovieItem>()
+
+        fun removeMovieFromFavourite(idMovie:Int){
+            for (movie in lstMovieFavourite){
+                if (movie.id == idMovie){
+                    lstMovieFavourite.remove(movie)
+                    return
+                }
+            }
+        }
     }
 
 }
