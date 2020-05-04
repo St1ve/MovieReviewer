@@ -11,8 +11,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import com.google.android.material.appbar.CollapsingToolbarLayout
-import dev.stive.moviereviewer.recyclerMovie.MovieItem
+import dev.stive.moviereviewer.data.Movie
 
 /**
  * A simple [Fragment] subclass.
@@ -41,12 +40,12 @@ class MovieDetailFragment : Fragment() {
         txtMovieDescription = view.findViewById(R.id.txtMovieDescription)
         imgMoviePoster = view.findViewById(R.id.imgMovie)
 
-        val movieData: MovieItem = arguments?.getParcelable("movieData")!!
+        val movieData: Movie = arguments?.getParcelable("movieData")!!
         Log.d("MovieDetail", "MovieData:$movieData")
 
         toolbar.title = movieData.title
-        txtMovieDescription.text = movieData.description
-        imgMoviePoster.setImageBitmap(movieData.poster)
+        txtMovieDescription.text = movieData.overview
+//        imgMoviePoster.setImageBitmap(movieData.poster)
     }
 
     override fun onResume() {

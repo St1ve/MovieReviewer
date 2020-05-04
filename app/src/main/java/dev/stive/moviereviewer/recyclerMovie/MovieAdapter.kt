@@ -5,8 +5,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import dev.stive.moviereviewer.R
+import dev.stive.moviereviewer.data.Movie
 
-class MovieAdapter(val view: View, val inflater: LayoutInflater, val lstMoviesItems: List<MovieItem>, val flagFavourite:Boolean, val iMovieItemActions: IMovieItemActions) :
+class MovieAdapter(val view: View, val inflater: LayoutInflater, val lstMoviesItems: List<Movie>, val flagFavourite:Boolean, val iMovieItemActions: IMovieItemActions) :
     RecyclerView.Adapter<MovieViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
@@ -27,6 +28,6 @@ class MovieAdapter(val view: View, val inflater: LayoutInflater, val lstMoviesIt
 
     interface IMovieItemActions {
         fun notifyDelete(position:Int)
-        fun openMovieDetail(movieData:MovieItem)
+        fun openMovieDetail(movieData: Movie)
     }
 }

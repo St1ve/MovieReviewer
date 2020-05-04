@@ -33,6 +33,6 @@
         tools:layout="@layout/fragment_movie_detail" >
         <argument
             android:name="movieData"
-            app:argType="dev.stive.moviereviewer.recyclerMovie.MovieItem" />
+            app:argType="dev.stive.moviereviewer.data.Movie" />
     </fragment>
 </navigation>

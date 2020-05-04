@@ -10,13 +10,18 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.navigation.Navigation
 import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
-import dev.stive.moviereviewer.recyclerMovie.MovieItem
+import dev.stive.moviereviewer.data.Movie
+import dev.stive.moviereviewer.data.MovieResponse
+import dev.stive.moviereviewer.network.MovieApiClient
 import kotlinx.android.synthetic.main.activity_main.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,10 +33,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         Log.d("MovieDetailFragment", "MainCreate")
+        getPopularMovies()
 
         if ((savedInstanceState != null) && (savedInstanceState.containsKey(KEY_LST_FAVOURITE_MOVIES))) {
             lstMovieFavourite =
-                savedInstanceState.getParcelableArrayList<MovieItem>(KEY_LST_FAVOURITE_MOVIES)!!
+                savedInstanceState.getParcelableArrayList<Movie>(KEY_LST_FAVOURITE_MOVIES)!!
         }
 
         val toolbar = findViewById<Toolbar>(R.id.toolBarMain)
@@ -40,10 +46,9 @@ class MainActivity : AppCompatActivity() {
         navController = Navigation.findNavController(this, R.id.nav_host_fragment)
         setupNavigationMenu(navController)
 
-        if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT ){
+        if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
             setupBottomNavigationMenu(navController)
-        }
-        else{
+        } else {
             drawer = findViewById<DrawerLayout>(R.id.main_drawer_layout)
             val toggle = ActionBarDrawerToggle(
                 this,
@@ -95,14 +100,38 @@ class MainActivity : AppCompatActivity() {
         dialog.show()
     }
 
+
+    fun getPopularMovies() {
+
+        val call: Call<MovieResponse> = MovieApiClient.apiClient.getTopRatedMovies(
+            MovieApiClient.API_KEY,
+            MovieApiClient.LAGUAGE_RUS
+        )
+
+        call.enqueue(object : Callback<MovieResponse> {
+            override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
+                lstMovies = response.body()?.results as List<Movie>
+
+                Log.d("MovieData", lstMovies[0]?.title)
+            }
+
+            override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
+                t.printStackTrace()
+            }
+
+        })
+    }
+
     companion object {
+        var lstMovies: List<Movie> = ArrayList<Movie>()
+
         const val KEY_MOVIE_DETAIL_DATA = "MovieDetailData"
         const val KEY_LST_FAVOURITE_MOVIES = "lstFavouriteMovies"
-        var lstMovieFavourite = ArrayList<MovieItem>()
+        var lstMovieFavourite = ArrayList<Movie>()
 
-        fun removeMovieFromFavourite(idMovie:Int){
-            for (movie in lstMovieFavourite){
-                if (movie.id == idMovie){
+        fun removeMovieFromFavourite(idMovie: Int) {
+            for (movie in lstMovieFavourite) {
+                if (movie.id == idMovie) {
                     lstMovieFavourite.remove(movie)
                     return
                 }

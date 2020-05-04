@@ -6,16 +6,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import dev.stive.moviereviewer.MainActivity.Companion.lstMovieFavourite
+import dev.stive.moviereviewer.data.Movie
 import dev.stive.moviereviewer.recyclerMovie.MovieAdapter
-import dev.stive.moviereviewer.recyclerMovie.MovieItem
-import kotlinx.android.synthetic.main.activity_main.*
 
 /**
  * A simple [Fragment] subclass.
@@ -44,7 +42,7 @@ class MoviesFavouriteListFragment : Fragment() {
                     adapter.notifyItemRemoved(position)
                 }
 
-                override fun openMovieDetail(movieData: MovieItem) {
+                override fun openMovieDetail(movieData: Movie) {
                     val bundleMovieData: Bundle = bundleOf("movieData" to movieData)
                     findNavController().navigate(
                         R.id.action_favourite_movies_destination_to_movie_detail_destination,
