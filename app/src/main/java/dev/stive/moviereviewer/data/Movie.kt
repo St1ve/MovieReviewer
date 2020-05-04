@@ -22,9 +22,6 @@ data class Movie(
     @field:SerializedName("genre_ids")
     val genreIds: List<Int?>? = null,
 
-    @field:SerializedName("poster_path")
-    val posterPath: String? = null,
-
     @field:SerializedName("backdrop_path")
     val backdropPath: String? = null,
 
@@ -36,4 +33,8 @@ data class Movie(
 
     @field:SerializedName("id")
     val id: Int
-) : Parcelable
+) : Parcelable {
+    @field:SerializedName("poster_path")
+    var posterPath: String? = null
+        get() = "https://image.tmdb.org/t/p/w500$field"
+}

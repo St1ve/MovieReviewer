@@ -19,6 +19,7 @@ import dev.stive.moviereviewer.data.Movie
 import dev.stive.moviereviewer.data.MovieResponse
 import dev.stive.moviereviewer.network.MovieApiClient
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.delay
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -31,9 +32,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        Log.d("MovieDetailFragment", "MainCreate")
-        getPopularMovies()
 
         if ((savedInstanceState != null) && (savedInstanceState.containsKey(KEY_LST_FAVOURITE_MOVIES))) {
             lstMovieFavourite =
@@ -100,31 +98,7 @@ class MainActivity : AppCompatActivity() {
         dialog.show()
     }
 
-
-    fun getPopularMovies() {
-
-        val call: Call<MovieResponse> = MovieApiClient.apiClient.getTopRatedMovies(
-            MovieApiClient.API_KEY,
-            MovieApiClient.LAGUAGE_RUS
-        )
-
-        call.enqueue(object : Callback<MovieResponse> {
-            override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
-                lstMovies = response.body()?.results as List<Movie>
-
-                Log.d("MovieData", lstMovies[0]?.title)
-            }
-
-            override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
-                t.printStackTrace()
-            }
-
-        })
-    }
-
     companion object {
-        var lstMovies: List<Movie> = ArrayList<Movie>()
-
         const val KEY_MOVIE_DETAIL_DATA = "MovieDetailData"
         const val KEY_LST_FAVOURITE_MOVIES = "lstFavouriteMovies"
         var lstMovieFavourite = ArrayList<Movie>()

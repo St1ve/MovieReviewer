@@ -11,7 +11,9 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import dev.stive.moviereviewer.data.Movie
+import java.util.*
 
 /**
  * A simple [Fragment] subclass.
@@ -41,22 +43,42 @@ class MovieDetailFragment : Fragment() {
         imgMoviePoster = view.findViewById(R.id.imgMovie)
 
         val movieData: Movie = arguments?.getParcelable("movieData")!!
-        Log.d("MovieDetail", "MovieData:$movieData")
 
-        toolbar.title = movieData.title
-        txtMovieDescription.text = movieData.overview
-//        imgMoviePoster.setImageBitmap(movieData.poster)
+        Log.d("TestLocale", "Laguage:${Locale.getDefault().language}")
+
+        if (Locale.getDefault().language.equals("en")){
+            toolbar.title = movieData.originalTitle
+            txtMovieDescription.text = movieData.overview
+        }
+        else{
+            toolbar.title = movieData.title
+            txtMovieDescription.text = movieData.overview
+        }
+
+
+
+
+        Glide.with(view)
+            .load(movieData.posterPath)
+            .placeholder(R.drawable.ic_placeholder_image_black_32dp)
+            .fitCenter()
+            .into(imgMoviePoster)
+    }
+
+    private fun setTextViews(
+        toolbar: Toolbar,
+        movieData: Movie
+    ) {
+
     }
 
     override fun onResume() {
         super.onResume()
         (activity as AppCompatActivity).supportActionBar?.hide()
-        Log.d("MovieDetailFragment", "onResume")
     }
 
     override fun onStop() {
         super.onStop()
         (activity as AppCompatActivity).supportActionBar?.show()
-        Log.d("MovieDetailFragment", "onStop")
     }
 }

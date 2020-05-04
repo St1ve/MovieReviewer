@@ -6,8 +6,8 @@ import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
-import dev.stive.moviereviewer.MainActivity
 import dev.stive.moviereviewer.MainActivity.Companion.lstMovieFavourite
 import dev.stive.moviereviewer.MainActivity.Companion.removeMovieFromFavourite
 import dev.stive.moviereviewer.R
@@ -28,9 +28,12 @@ class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         flagFavourite: Boolean
     ) {
         titleTv.text = movie.title
-//        descriptionTv.text = movie.description
         descriptionTv.text = movie.overview
-//        imagePosterTv.setImageBitmap(movie.poster)
+        Glide.with(view)
+            .load(movie.posterPath)
+            .placeholder(R.drawable.ic_placeholder_image_black_32dp)
+            .fitCenter()
+            .into(imagePosterTv)
 
         btnMovieDetail.setOnClickListener {
             iMovieItemActions.openMovieDetail(movie)
@@ -74,9 +77,9 @@ class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         }
     }
 
-    private fun checkForFavourite(idMovie: Int):Boolean{
-        for (movie in lstMovieFavourite){
-            if (movie.id == idMovie){
+    private fun checkForFavourite(idMovie: Int): Boolean {
+        for (movie in lstMovieFavourite) {
+            if (movie.id == idMovie) {
                 return true
             }
         }
