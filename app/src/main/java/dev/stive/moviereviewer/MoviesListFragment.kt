@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import dev.stive.moviereviewer.data.Movie
 import dev.stive.moviereviewer.data.MovieResponse
 import dev.stive.moviereviewer.network.MovieApiClient
@@ -21,6 +22,7 @@ import java.util.*
 
 class MoviesListFragment : Fragment() {
     private lateinit var adapter: MovieAdapter
+    private lateinit var srMovieList: SwipeRefreshLayout
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,7 +36,26 @@ class MoviesListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val rvMovieItem = view.findViewById<RecyclerView>(R.id.rvMovies)
+        val srMovieList = view.findViewById<SwipeRefreshLayout>(R.id.srFragmentMovies)
 
+        srMovieList.setOnRefreshListener {
+            setMoviesToRecyclerView(rvMovieItem, view)
+            srMovieList.isRefreshing = false
+        }
+
+        setMoviesToRecyclerView(rvMovieItem, view)
+
+
+        if(resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
+            rvMovieItem.addItemDecoration(
+                DividerItemDecoration(context,DividerItemDecoration.VERTICAL)
+            )
+    }
+
+    private fun setMoviesToRecyclerView(
+        rvMovieItem: RecyclerView,
+        view: View
+    ) {
         val call: Call<MovieResponse> = MovieApiClient.apiClient.getTopRatedMovies(
             MovieApiClient.API_KEY,
             Locale.getDefault().language
@@ -70,11 +91,5 @@ class MoviesListFragment : Fragment() {
             }
 
         })
-
-
-        if(resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
-            rvMovieItem.addItemDecoration(
-                DividerItemDecoration(context,DividerItemDecoration.VERTICAL)
-            )
     }
 }
