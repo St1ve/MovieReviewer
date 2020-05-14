@@ -41,7 +41,7 @@ class MovieDetailFragment : Fragment() {
         txtMovieDescription = view.findViewById(R.id.txtMovieDescription)
         imgMoviePoster = view.findViewById(R.id.imgMovie)
 
-        val movieData: MovieItem = arguments?.getParcelable("movieData")!!
+        val movieData: MovieItem = arguments?.getParcelable(DATA_KEY)!!
         Log.d("MovieDetail", "MovieData:$movieData")
 
         toolbar.title = movieData.title
@@ -59,5 +59,21 @@ class MovieDetailFragment : Fragment() {
         super.onStop()
         (activity as AppCompatActivity).supportActionBar?.show()
         Log.d("MovieDetailFragment", "onStop")
+    }
+
+    companion object{
+        const val TAG = "MovieDetailFragment"
+
+        const val DATA_KEY = "MovieDetailData"
+
+        fun newInstance(movieItem: MovieItem): MovieDetailFragment{
+            val fragment = MovieDetailFragment()
+
+            val bundle = Bundle()
+            bundle.putParcelable(DATA_KEY, movieItem)
+            fragment.arguments = bundle
+
+            return fragment
+        }
     }
 }

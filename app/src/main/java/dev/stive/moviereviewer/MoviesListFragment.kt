@@ -2,24 +2,19 @@ package dev.stive.moviereviewer
 
 import android.content.res.Configuration
 import android.graphics.BitmapFactory
-import android.opengl.Visibility
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import dev.stive.moviereviewer.recyclerMovie.MovieAdapter
 import dev.stive.moviereviewer.recyclerMovie.MovieItem
-import kotlinx.android.synthetic.main.activity_main.*
 
 class MoviesListFragment : Fragment() {
     private lateinit var adapter: MovieAdapter
-    private lateinit var mainActivity: AppCompatActivity
+    var listener: MovieAdapter.IOnMovieDetailOpen? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -94,24 +89,21 @@ class MoviesListFragment : Fragment() {
             LayoutInflater.from(context),
             lstMovies,
             false,
-            object : MovieAdapter.IMovieItemActions {
-                override fun notifyDelete(position: Int) {
+            object : MovieAdapter.IOnItemDelete {
+                override fun onItemDelete(position: Int) {
                     adapter.notifyItemRemoved(position)
                 }
-
-                override fun openMovieDetail(movieData: MovieItem) {
-                    val bundleMovieData: Bundle = bundleOf("movieData" to movieData)
-                    findNavController().navigate(
-                        R.id.action_home_destination_to_movie_detail_destination,
-                        bundleMovieData
-                    )
-                }
-            }
+            },
+            listener
         )
 
         val rvMovieItem = view.findViewById<RecyclerView>(R.id.rvMovies)
         rvMovieItem.adapter = adapter
         if(resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
             rvMovieItem.addItemDecoration(DividerItemDecoration(context,DividerItemDecoration.VERTICAL))
+    }
+
+    companion object{
+        const val TAG = "MoviesListFragment"
     }
 }

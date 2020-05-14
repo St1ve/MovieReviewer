@@ -7,7 +7,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
-import dev.stive.moviereviewer.MainActivity
 import dev.stive.moviereviewer.MainActivity.Companion.lstMovieFavourite
 import dev.stive.moviereviewer.MainActivity.Companion.removeMovieFromFavourite
 import dev.stive.moviereviewer.R
@@ -23,7 +22,8 @@ class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         view: View,
         movieItem: MovieItem,
         position: Int,
-        iMovieItemActions: MovieAdapter.IMovieItemActions,
+        iOnItemDelete: MovieAdapter.IOnItemDelete,
+        iOnMovieDetailOpen: MovieAdapter.IOnMovieDetailOpen?,
         flagFavourite: Boolean
     ) {
         titleTv.text = movieItem.title
@@ -31,7 +31,7 @@ class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         imagePosterTv.setImageBitmap(movieItem.poster)
 
         btnMovieDetail.setOnClickListener {
-            iMovieItemActions.openMovieDetail(movieItem)
+            iOnMovieDetailOpen?.onOpenMovieDetail(movieItem)
         }
 
         if (flagFavourite) {
@@ -41,7 +41,7 @@ class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 if (!chMovieFavourite.isChecked) {
                     removeMovieFromFavourite(movieItem.id)
                     chMovieFavourite.isChecked = false
-                    iMovieItemActions.notifyDelete(position)
+                    iOnItemDelete.onItemDelete(position)
                     Snackbar.make(
                         view,
                         "Movie ${movieItem.title} was deleted from favourite",

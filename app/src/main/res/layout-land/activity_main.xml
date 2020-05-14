@@ -10,22 +10,21 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-                <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/toolBarMain"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/colorPrimary"
-                    app:layout_constraintBottom_toTopOf="@id/nav_host_fragment"
-                    app:titleTextColor="@color/colorButtonText" />
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolBarMain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            app:layout_constraintBottom_toTopOf="@id/nav_host_fragment"
+            app:titleTextColor="@color/colorButtonText" />
 
-        <fragment
+        <androidx.fragment.app.FragmentContainerView
             android:id="@+id/nav_host_fragment"
-            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:name="dev.stive.moviereviewer.MoviesListFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:defaultNavHost="true"
-            app:layout_constraintVertical_weight="1"
-            app:navGraph="@navigation/nav_graph_app" />
+            app:layout_constraintVertical_weight="1" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <com.google.android.material.navigation.NavigationView
