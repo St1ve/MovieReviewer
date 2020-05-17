@@ -10,19 +10,11 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
-import androidx.navigation.findNavController
+import androidx.navigation.*
 import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
 import dev.stive.moviereviewer.data.Movie
-import dev.stive.moviereviewer.data.MovieResponse
-import dev.stive.moviereviewer.network.MovieApiClient
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.delay
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
 
@@ -80,10 +72,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        showQuitDialog()
+        Log.d("OnBackPressed","Graph:${navController.currentDestination}")
+        val destination = navController.graph[R.id.movie_detail_destination]
+        if (navController.currentDestination is )
+//        super.onBackPressed()
+//        showQuitDialog()
     }
 
-    fun showQuitDialog() {
+    private fun showQuitDialog() {
         val alertDialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this)
 
         val actionCancel = DialogInterface.OnClickListener { dialog, which -> dialog.dismiss() }

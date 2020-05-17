@@ -9,9 +9,6 @@
         android:name="dev.stive.moviereviewer.MoviesFavouriteListFragment"
         android:label="MoviesFavouriteListFragment" >
         <action
-            android:id="@+id/action_favourite_movies_destination_to_home_destination"
-            app:destination="@id/home_destination" />
-        <action
             android:id="@+id/action_favourite_movies_destination_to_movie_detail_destination"
             app:destination="@id/movie_detail_destination" />
     </fragment>
@@ -19,9 +16,6 @@
         android:id="@+id/home_destination"
         android:name="dev.stive.moviereviewer.MoviesListFragment"
         android:label="MoviesListFragment" >
-        <action
-            android:id="@+id/action_home_destination_to_favourite_movies_destination2"
-            app:destination="@id/favourite_movies_destination" />
         <action
             android:id="@+id/action_home_destination_to_movie_detail_destination"
             app:destination="@id/movie_detail_destination" />
