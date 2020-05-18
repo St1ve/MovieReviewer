@@ -3,15 +3,18 @@ package dev.stive.moviereviewer
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.res.Configuration
+import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dev.stive.moviereviewer.recyclerMovie.MovieAdapter
 import dev.stive.moviereviewer.recyclerMovie.MovieItem
@@ -108,6 +111,8 @@ class MainActivity : AppCompatActivity(), MovieAdapter.IOnMovieDetailOpen {
             MovieDetailFragment.newInstance(item),
             MovieDetailFragment.TAG
         ).addToBackStack(null).commit()
+        //Hide bottomNavigationBar
+        nav_bottom_bar.visibility = View.GONE
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

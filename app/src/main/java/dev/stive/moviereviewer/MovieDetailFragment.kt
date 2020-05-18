@@ -13,6 +13,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import dev.stive.moviereviewer.recyclerMovie.MovieItem
+import kotlinx.android.synthetic.main.activity_main.*
 
 /**
  * A simple [Fragment] subclass.
@@ -33,7 +34,8 @@ class MovieDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val toolbar = view.findViewById<Toolbar>(R.id.toolBarDetail)
-
+        //Setup back arrow
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp)
         toolbar.setNavigationOnClickListener {
             activity?.onBackPressed()
         }
@@ -59,6 +61,12 @@ class MovieDetailFragment : Fragment() {
         super.onStop()
         (activity as AppCompatActivity).supportActionBar?.show()
         Log.d("MovieDetailFragment", "onStop")
+    }
+
+    override fun onDetach() {
+        //Return visibility for bottomNavigationBar
+        activity?.nav_bottom_bar?.visibility = View.VISIBLE
+        super.onDetach()
     }
 
     companion object{
