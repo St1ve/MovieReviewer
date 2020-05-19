@@ -73,6 +73,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         Log.d("OnBackPressed","Graph:${navController.currentDestination}")
+        /*TODO добавить сравнение
+        * Здесь хотелось бы в зависимости от текущего фрагмента привязывать логику кнопки "Назад"
+        * Как получить объект типа NavDestination нужного мне фрагмента для последующего сравнение в if (navController.currentDestination is ...) непонятно
+        */
         val destination = navController.graph[R.id.movie_detail_destination]
         if (navController.currentDestination is )
 //        super.onBackPressed()
