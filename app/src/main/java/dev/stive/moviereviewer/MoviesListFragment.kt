@@ -99,11 +99,17 @@ class MoviesListFragment : Fragment() {
 
         val rvMovieItem = view.findViewById<RecyclerView>(R.id.rvMovies)
         rvMovieItem.adapter = adapter
-        if(resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
-            rvMovieItem.addItemDecoration(DividerItemDecoration(context,DividerItemDecoration.VERTICAL))
+        if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
+            rvMovieItem.addItemDecoration(
+                DividerItemDecoration(
+                    context,
+                    DividerItemDecoration.VERTICAL
+                )
+            )
     }
 
-    companion object{
-        const val TAG = "MoviesListFragment"
+    companion object {
+        const val TAG_FRAGMENT = "MoviesListFragment"
+        const val TAG_BACKSTACK = "MoviesListFragmentBackStack"
     }
 }

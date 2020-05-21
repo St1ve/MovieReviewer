@@ -3,11 +3,8 @@ package dev.stive.moviereviewer
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.res.Configuration
-import android.opengl.Visibility
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
-import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -88,31 +85,47 @@ class MainActivity : AppCompatActivity(), MovieAdapter.IOnMovieDetailOpen {
     }
 
     private fun openFavouriteListFragment() {
-        supportFragmentManager.beginTransaction().replace(
-            R.id.nav_host_fragment,
-            MoviesFavouriteListFragment(),
-            MoviesFavouriteListFragment.TAG
-        ).commit()
+        if (!supportFragmentManager.popBackStackImmediate(
+                MoviesFavouriteListFragment.TAG_BACKSTACK,
+                0
+            ) && supportFragmentManager.findFragmentByTag(MoviesFavouriteListFragment.TAG_FRAGMENT) == null
+        ) {
+            supportFragmentManager.beginTransaction().replace(
+                R.id.nav_host_fragment,
+                MoviesFavouriteListFragment(),
+                MoviesFavouriteListFragment.TAG_FRAGMENT
+            ).addToBackStack(MoviesFavouriteListFragment.TAG_BACKSTACK).commit()
+        }
     }
 
     //Make transition to MoviesListFragment
     private fun openMoviesListFragment() {
-        supportFragmentManager.beginTransaction().replace(
-            R.id.nav_host_fragment,
-            MoviesListFragment(),
-            MoviesListFragment.TAG
-        ).commit()
+        if (!supportFragmentManager.popBackStackImmediate(
+                MoviesListFragment.TAG_BACKSTACK,
+                0
+            ) && supportFragmentManager.findFragmentByTag(MoviesListFragment.TAG_FRAGMENT) == null
+        ) {
+            supportFragmentManager.beginTransaction().replace(
+                R.id.nav_host_fragment,
+                MoviesListFragment(),
+                MoviesListFragment.TAG_FRAGMENT
+            ).addToBackStack(MoviesListFragment.TAG_BACKSTACK).commit()
+        }
     }
 
     //Make transition to MoviesListFragment
     private fun openMovieDetailFragment(item: MovieItem) {
+        //Removing detailFragment from backStack
+        supportFragmentManager.popBackStackImmediate(
+            MovieDetailFragment.TAG_BACKSTACK,
+            FragmentManager.POP_BACK_STACK_INCLUSIVE
+        )
+
         supportFragmentManager.beginTransaction().replace(
             R.id.nav_host_fragment,
             MovieDetailFragment.newInstance(item),
-            MovieDetailFragment.TAG
-        ).addToBackStack(null).commit()
-        //Hide bottomNavigationBar
-        nav_bottom_bar.visibility = View.GONE
+            MovieDetailFragment.TAG_FRAGMENT
+        ).addToBackStack(MovieDetailFragment.TAG_BACKSTACK).commit()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

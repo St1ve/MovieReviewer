@@ -2,7 +2,6 @@ package dev.stive.moviereviewer
 
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,6 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import com.google.android.material.appbar.CollapsingToolbarLayout
 import dev.stive.moviereviewer.recyclerMovie.MovieItem
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -44,7 +42,6 @@ class MovieDetailFragment : Fragment() {
         imgMoviePoster = view.findViewById(R.id.imgMovie)
 
         val movieData: MovieItem = arguments?.getParcelable(DATA_KEY)!!
-        Log.d("MovieDetail", "MovieData:$movieData")
 
         toolbar.title = movieData.title
         txtMovieDescription.text = movieData.description
@@ -54,13 +51,11 @@ class MovieDetailFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         (activity as AppCompatActivity).supportActionBar?.hide()
-        Log.d("MovieDetailFragment", "onResume")
     }
 
     override fun onStop() {
         super.onStop()
         (activity as AppCompatActivity).supportActionBar?.show()
-        Log.d("MovieDetailFragment", "onStop")
     }
 
     override fun onDetach() {
@@ -70,7 +65,8 @@ class MovieDetailFragment : Fragment() {
     }
 
     companion object{
-        const val TAG = "MovieDetailFragment"
+        const val TAG_FRAGMENT = "MovieDetailFragment"
+        const val TAG_BACKSTACK = "MovieDetailFragmentBackStack"
 
         const val DATA_KEY = "MovieDetailData"
 

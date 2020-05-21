@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import dev.stive.moviereviewer.MainActivity.Companion.lstMovieFavourite
 import dev.stive.moviereviewer.recyclerMovie.MovieAdapter
-import dev.stive.moviereviewer.recyclerMovie.MovieItem
 
 /**
  * A simple [Fragment] subclass.
@@ -44,13 +43,19 @@ class MoviesFavouriteListFragment : Fragment() {
             listener
         )
 
-        val rvMovieItemFavourite =  view.findViewById<RecyclerView>(R.id.rvFavouriteMovies)
+        val rvMovieItemFavourite = view.findViewById<RecyclerView>(R.id.rvFavouriteMovies)
         rvMovieItemFavourite.adapter = adapter
-        if(resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
-            rvMovieItemFavourite.addItemDecoration(DividerItemDecoration(context,DividerItemDecoration.VERTICAL))
+        if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
+            rvMovieItemFavourite.addItemDecoration(
+                DividerItemDecoration(
+                    context,
+                    DividerItemDecoration.VERTICAL
+                )
+            )
     }
 
-    companion object{
-        const val TAG = "MoviesFavouriteListFragment"
+    companion object {
+        const val TAG_FRAGMENT = "MoviesFavouriteListFragment"
+        const val TAG_BACKSTACK = "MoviesFavouriteListFragmentBackStack"
     }
 }
