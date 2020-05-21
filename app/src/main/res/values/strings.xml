@@ -11,4 +11,9 @@
     <string name="description_accountent">The tape tells the story of the mathematical genius Christian Wolfe, who works as an auditor for the most dangerous criminal organizations. When the crime department of the Ministry of Finance, led by Ray King, sits down on his tail, Christian decides to find a law-abiding client and audits the company for the production of the latest robotics, where an employee of the financial department discovered a “inconsistency” of millions of dollars. But as soon as Christian takes charge of the accounts and goes on the trail, victims begin to appear in business.</string>
     <string name="alert_dialog_quit_message">Are you sure, that you want to exit?</string>
     <string name="alert_dialog_quit_title">Warning!</string>
+    <string name="nav_home">Home</string>
+    <string name="nav_favourite">Favourite</string>
+
+    <string name="navigation_drawer_open">nav drawer open</string>
+    <string name="navigation_drawer_closed">nav drawer closed</string>
 </resources>

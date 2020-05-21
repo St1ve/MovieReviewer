@@ -1,0 +1,83 @@
+package dev.stive.moviereviewer
+
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.Fragment
+import dev.stive.moviereviewer.recyclerMovie.MovieItem
+import kotlinx.android.synthetic.main.activity_main.*
+
+/**
+ * A simple [Fragment] subclass.
+ */
+class MovieDetailFragment : Fragment() {
+
+    private lateinit var txtMovieDescription: TextView
+    private lateinit var imgMoviePoster: ImageView
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_movie_detail, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val toolbar = view.findViewById<Toolbar>(R.id.toolBarDetail)
+        //Setup back arrow
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp)
+        toolbar.setNavigationOnClickListener {
+            activity?.onBackPressed()
+        }
+
+        txtMovieDescription = view.findViewById(R.id.txtMovieDescription)
+        imgMoviePoster = view.findViewById(R.id.imgMovie)
+
+        val movieData: MovieItem = arguments?.getParcelable(DATA_KEY)!!
+
+        toolbar.title = movieData.title
+        txtMovieDescription.text = movieData.description
+        imgMoviePoster.setImageBitmap(movieData.poster)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (activity as AppCompatActivity).supportActionBar?.hide()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        (activity as AppCompatActivity).supportActionBar?.show()
+    }
+
+    override fun onDetach() {
+        //Return visibility for bottomNavigationBar
+        activity?.nav_bottom_bar?.visibility = View.VISIBLE
+        super.onDetach()
+    }
+
+    companion object{
+        const val TAG_FRAGMENT = "MovieDetailFragment"
+        const val TAG_BACKSTACK = "MovieDetailFragmentBackStack"
+
+        const val DATA_KEY = "MovieDetailData"
+
+        fun newInstance(movieItem: MovieItem): MovieDetailFragment{
+            val fragment = MovieDetailFragment()
+
+            val bundle = Bundle()
+            bundle.putParcelable(DATA_KEY, movieItem)
+            fragment.arguments = bundle
+
+            return fragment
+        }
+    }
+}

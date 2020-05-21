@@ -1,180 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_drawer_layout"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackgroundApp"
+    android:background="?android:attr/windowBackground"
     tools:context=".MainActivity">
 
-    <ScrollView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.LinearLayoutCompat
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolBarMain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:background="@color/colorPrimary"
+            app:titleTextColor="@color/colorButtonText"/>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="10">
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/imgWhoAmI"
-                    android:layout_width="@dimen/PosterSizePortrait"
-                    android:layout_height="@dimen/PosterSizePortrait"
-                    android:layout_margin="5dp"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/who_am_i"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/txtWhoAmI"
-                    style="@style/MovieTitle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:text="@string/who_am_i"
-                    android:textSize="26sp"
-                    app:layout_constraintBottom_toTopOf="@id/btnWhoAmI"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/imgWhoAmI"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnWhoAmI"
-                    style="@style/ButtonsMovieDetails"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:fontFamily="@font/roboto_black"
-                    android:text="@string/btn_movie_detail"
-                    android:textSize="18sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/imgWhoAmI" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/imgIronMan"
-                    android:layout_width="@dimen/PosterSizePortrait"
-                    android:layout_height="@dimen/PosterSizePortrait"
-                    android:layout_margin="5dp"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/ironman"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/txtIronMan"
-                    style="@style/MovieTitle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:text="@string/iron_man_3"
-                    android:textSize="26sp"
-                    app:layout_constraintBottom_toTopOf="@id/btnIronMan"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/imgIronMan"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnIronMan"
-                    style="@style/ButtonsMovieDetails"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginEnd="8dp"
-                    android:text="@string/btn_movie_detail"
-
-                    android:textSize="18sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/imgIronMan" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/imgAccountent"
-                    android:layout_width="@dimen/PosterSizePortrait"
-                    android:layout_height="@dimen/PosterSizePortrait"
-                    android:layout_margin="5dp"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/accountent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/txtAccountent"
-                    style="@style/MovieTitle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:text="@string/accountent"
-                    android:textAlignment="center"
-                    android:textSize="26sp"
-                    app:layout_constraintBottom_toTopOf="@id/btnAccountent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/imgAccountent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnAccountent"
-                    style="@style/ButtonsMovieDetails"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginEnd="8dp"
-                    android:text="@string/btn_movie_detail"
-                    android:textSize="18sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/imgAccountent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <Button
-                android:id="@+id/btnInvitation"
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/nav_host_fragment"
+                android:name="dev.stive.moviereviewer.MoviesListFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:paddingEnd="10dp"
-                android:paddingStart="10dp"
-                android:drawableEnd="@drawable/ic_share_black_24dp"
-                android:background="@drawable/button_invite_shape"
-                android:fontFamily="@font/roboto_light"
-                android:text="@string/button_invite_friend"
-                android:textColor="@color/colorMovieTitleTouched"
-                android:textSize="26sp" />
+                app:defaultNavHost="true"
+                tools:layout="@layout/fragment_movies_list" />
 
-        </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-    </ScrollView>
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/nav_bottom_bar"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_gravity="bottom"
+            android:background="?android:attr/windowBackground"
+            app:menu="@menu/nav_menu" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.drawerlayout.widget.DrawerLayout>
