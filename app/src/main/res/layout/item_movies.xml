@@ -8,6 +8,7 @@
     <TextView
         android:id="@+id/txtTitleMovie"
         style="@style/MovieTitle"
+        android:lines="1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -49,6 +50,7 @@
         android:id="@+id/txtDescriptionMovie"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:lines="5"
         android:layout_margin="5dp"
         android:maxLines="6"
         app:layout_constraintEnd_toEndOf="parent"

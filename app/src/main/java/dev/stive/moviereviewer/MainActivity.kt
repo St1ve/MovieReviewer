@@ -10,7 +10,10 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.navigation.*
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import androidx.navigation.get
 import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
 import dev.stive.moviereviewer.data.Movie
@@ -72,15 +75,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        Log.d("OnBackPressed","Graph:${navController.currentDestination}")
-        /*TODO добавить сравнение
-        * Здесь хотелось бы в зависимости от текущего фрагмента привязывать логику кнопки "Назад"
-        * Как получить объект типа NavDestination нужного мне фрагмента для последующего сравнение в if (navController.currentDestination is ...) непонятно
-        */
+        Log.d("OnBackPressed", "Graph:${navController.currentDestination}")
         val destination = navController.graph[R.id.movie_detail_destination]
-        if (navController.currentDestination is )
-//        super.onBackPressed()
-//        showQuitDialog()
+        if (navController.currentDestination == destination)
+            super.onBackPressed()
+        else
+            showQuitDialog()
     }
 
     private fun showQuitDialog() {
