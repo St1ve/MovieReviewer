@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">MovieReviewer</string>
+    <string name="who_am_i">Who am I</string>
+    <string name="iron_man_3">Iron Man</string>
+    <string name="accountent">Accountent</string>
+    <string name="film_comment_hint">Write your comment here</string>
+    <string name="btn_movie_detail">Details</string>
+    <string name="button_invite_friend">Invite friend</string>
+    <string name="description_who_am_i_movie"> Benjamin is a young computer genius. Since childhood, he dreams of becoming a comic book superhero and conquering the world. But in the real world, he is nobody. His life suddenly changes when he meets his exact opposite - the charismatic Max. Not wanting to live in the rigid framework of the system, they commit a series of daring cyber crimes. Having rebelled against an indifferent society, they become idols for an entire generation. Now Benjamin is not just a superhero, he is the most wanted hacker in the world. But what awaits him after immersion in an alternative reality? Who is he really</string>
+    <string name="description_iron_man_movie">Robert Downey Jr and Gwyneth Paltrow turn into cult heroes of the famous Marvel comics. Tony Stark - a minion of fortune, heir to the billionth fortune, philanthropist and playboy. He is very good at burning his life, he is an expert on the best parties, gourmet restaurants, and only the most beautiful girls always act as his companions. However, there is another facet of the hero’s personality: he is the head of a huge company and a talented inventor. Once in Afghanistan, during the presentation of one of his “goods”, a Jericho rocket, Tony is captured by terrorists. He is seriously injured, but with the help of his gift, an engineer designs incredible armor that save his life and help him out of the shelters of criminals. After all his adventures, Stark intends to curtail the production of weapons in his company, but not everyone supports the newly made pacifist.</string>
+    <string name="description_accountent">The tape tells the story of the mathematical genius Christian Wolfe, who works as an auditor for the most dangerous criminal organizations. When the crime department of the Ministry of Finance, led by Ray King, sits down on his tail, Christian decides to find a law-abiding client and audits the company for the production of the latest robotics, where an employee of the financial department discovered a “inconsistency” of millions of dollars. But as soon as Christian takes charge of the accounts and goes on the trail, victims begin to appear in business.</string>
+    <string name="alert_dialog_quit_message">Are you sure, that you want to exit?</string>
+    <string name="alert_dialog_quit_title">Warning!</string>
+    <string name="nav_home">Home</string>
+    <string name="nav_favourite">Favourite</string>
+
+    <string name="navigation_drawer_open">nav drawer open</string>
+    <string name="navigation_drawer_closed">nav drawer closed</string>
 </resources>
