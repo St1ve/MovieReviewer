@@ -13,4 +13,7 @@
     <string name="alert_dialog_quit_title">Внимание!</string>
     <string name="nav_home">Главная страница</string>
     <string name="nav_favourite">Избранное</string>
+    <string name="msg_error_no_internet">Отсутствует соединение с интернетом!</string>
+    <string name="msg_error_cant_load_movies">Ошибка загрузки фильмов</string>
+    <string name="text_no_movies">Нет фильмов</string>
 </resources>

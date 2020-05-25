@@ -12,7 +12,10 @@
     <string name="alert_dialog_quit_message">Are you sure, that you want to exit?</string>
     <string name="alert_dialog_quit_title">Warning!</string>
     <string name="nav_home">Home</string>
+    <string name="msg_error_no_internet">No internet! Can\'t update movies</string>
+    <string name="msg_error_cant_load_movies">Error! Can\'t load more movies</string>
     <string name="nav_favourite">Favourite</string>
+    <string name="text_no_movies">No movies</string>
 
     <string name="navigation_drawer_open">nav drawer open</string>
     <string name="navigation_drawer_closed">nav drawer closed</string>

@@ -6,6 +6,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 object MovieApiClient {
     private const val BASE_URL = "https://api.themoviedb.org/3/"
     const val API_KEY: String = "52b2f7aa49c9d92b819ea6e63d084edf"
+
+    //Languages
     const val LAGUAGE_US: String = "en-US"
     const val LAGUAGE_RUS: String = "ru"
 

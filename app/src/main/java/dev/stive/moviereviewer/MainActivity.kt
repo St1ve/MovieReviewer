@@ -99,7 +99,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val KEY_MOVIE_DETAIL_DATA = "MovieDetailData"
         const val KEY_LST_FAVOURITE_MOVIES = "lstFavouriteMovies"
         var lstMovieFavourite = ArrayList<Movie>()
 
