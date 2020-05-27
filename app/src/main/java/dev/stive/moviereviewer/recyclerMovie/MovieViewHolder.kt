@@ -8,8 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
-import dev.stive.moviereviewer.MainActivity.Companion.lstMovieFavourite
-import dev.stive.moviereviewer.MainActivity.Companion.removeMovieFromFavourite
+import dev.stive.moviereviewer.MainActivity.Companion.lstMovies
 import dev.stive.moviereviewer.R
 import dev.stive.moviereviewer.data.Movie
 
@@ -24,8 +23,7 @@ class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         view: View,
         movie: Movie,
         position: Int,
-        iMovieItemActions: MovieAdapter.IMovieItemActions,
-        flagFavourite: Boolean
+        iMovieItemActions: MovieAdapter.IMovieItemActions
     ) {
         titleTv.text = movie.title
         descriptionTv.text = movie.overview
@@ -39,50 +37,24 @@ class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             iMovieItemActions.openMovieDetail(movie)
         }
 
-        if (flagFavourite) {
-            chMovieFavourite.isChecked = true
+        chMovieFavourite.isChecked = movie.flagFavourite
 
-            chMovieFavourite.setOnClickListener {
-                if (!chMovieFavourite.isChecked) {
-                    removeMovieFromFavourite(movie.id)
-                    chMovieFavourite.isChecked = false
-                    iMovieItemActions.notifyDelete(position)
-                    Snackbar.make(
-                        view,
-                        "Movie ${movie.title} was deleted from favourite",
-                        Snackbar.LENGTH_SHORT
-                    ).show()
-                }
-            }
-        } else {
-            chMovieFavourite.isChecked = checkForFavourite(movie.id)
-
-            chMovieFavourite.setOnClickListener {
-                if (chMovieFavourite.isChecked) {
-                    lstMovieFavourite.add(movie)
-                    Snackbar.make(
-                        view,
-                        "Movie ${movie.title} was added to favourite",
-                        Snackbar.LENGTH_SHORT
-                    ).show()
-                } else {
-                    removeMovieFromFavourite(movie.id)
-                    Snackbar.make(
-                        view,
-                        "Movie ${movie.title} was deleted from favourite",
-                        Snackbar.LENGTH_SHORT
-                    ).show()
-                }
+        chMovieFavourite.setOnClickListener {
+            if (!chMovieFavourite.isChecked) {
+                iMovieItemActions.removeFromFavourite(movie)
+                Snackbar.make(
+                    view,
+                    "Movie ${movie.title} was deleted from favourite",
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            } else {
+                lstMovies[position].flagFavourite = true
+                Snackbar.make(
+                    view,
+                    "Movie ${movie.title} was added to favourite",
+                    Snackbar.LENGTH_SHORT
+                ).show()
             }
         }
-    }
-
-    private fun checkForFavourite(idMovie: Int): Boolean {
-        for (movie in lstMovieFavourite) {
-            if (movie.id == idMovie) {
-                return true
-            }
-        }
-        return false
     }
 }

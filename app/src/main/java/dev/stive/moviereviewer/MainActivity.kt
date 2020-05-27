@@ -28,9 +28,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        if ((savedInstanceState != null) && (savedInstanceState.containsKey(KEY_LST_FAVOURITE_MOVIES))) {
-            lstMovieFavourite =
-                savedInstanceState.getParcelableArrayList<Movie>(KEY_LST_FAVOURITE_MOVIES)!!
+        if ((savedInstanceState != null) && (savedInstanceState.containsKey(KEY_LST_MOVIES))) {
+            lstMovies =
+                savedInstanceState.getParcelableArrayList<Movie>(KEY_LST_MOVIES)!!
         }
 
         val toolbar = findViewById<Toolbar>(R.id.toolBarMain)
@@ -71,7 +71,7 @@ class MainActivity : AppCompatActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
-        outState.putParcelableArrayList(KEY_LST_FAVOURITE_MOVIES, lstMovieFavourite)
+        outState.putParcelableArrayList(KEY_LST_MOVIES, lstMovies)
     }
 
     override fun onBackPressed() {
@@ -99,17 +99,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val KEY_LST_FAVOURITE_MOVIES = "lstFavouriteMovies"
-        var lstMovieFavourite = ArrayList<Movie>()
-
-        fun removeMovieFromFavourite(idMovie: Int) {
-            for (movie in lstMovieFavourite) {
-                if (movie.id == idMovie) {
-                    lstMovieFavourite.remove(movie)
-                    return
-                }
-            }
-        }
+        const val KEY_LST_MOVIES = "lstFavouriteMovies"
+        var lstMovies = ArrayList<Movie>()
     }
 
 }

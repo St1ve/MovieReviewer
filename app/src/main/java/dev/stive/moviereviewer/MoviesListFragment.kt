@@ -2,6 +2,7 @@ package dev.stive.moviereviewer
 
 import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.snackbar.Snackbar
+import dev.stive.moviereviewer.MainActivity.Companion.lstMovies
 import dev.stive.moviereviewer.data.Movie
 import dev.stive.moviereviewer.data.MovieResponse
 import dev.stive.moviereviewer.network.MovieApiClient
@@ -25,7 +27,6 @@ import java.util.*
 class MoviesListFragment : Fragment() {
     private lateinit var adapter: MovieAdapter
     private lateinit var srMovieList: SwipeRefreshLayout
-    private lateinit var lstMovies: ArrayList<Movie>
     private lateinit var rvMovieItem: RecyclerView
 
     /*
@@ -56,7 +57,10 @@ class MoviesListFragment : Fragment() {
             setMoviesToRecyclerView(view)
         }
 
-        setMoviesToRecyclerView(view)
+        if (lstMovies.isEmpty())
+            setMoviesToRecyclerView(view)
+        else
+            setupRecyclerViewAdapter(view)
 
         rvMovieItem.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -118,25 +122,8 @@ class MoviesListFragment : Fragment() {
             override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
                 lstMovies = response.body()!!.results as ArrayList<Movie>
 
-                rvMovieItem.adapter = MovieAdapter(
-                    view,
-                    LayoutInflater.from(context),
-                    lstMovies,
-                    false,
-                    object : MovieAdapter.IMovieItemActions {
-                        override fun notifyDelete(position: Int) {
-                            adapter.notifyItemRemoved(position)
-                        }
-
-                        override fun openMovieDetail(movieData: Movie) {
-                            val bundleMovieData: Bundle = bundleOf("movieData" to movieData)
-                            findNavController().navigate(
-                                R.id.action_home_destination_to_movie_detail_destination,
-                                bundleMovieData
-                            )
-                        }
-                    }
-                )
+                setupRecyclerViewAdapter(view)
+                Log.d("Test","${lstMovies.size}")
                 srMovieList.isRefreshing = false
             }
 
@@ -150,5 +137,26 @@ class MoviesListFragment : Fragment() {
                 srMovieList.isRefreshing = false
             }
         })
+    }
+
+    private fun setupRecyclerViewAdapter(view: View) {
+        rvMovieItem.adapter = MovieAdapter(
+            view,
+            LayoutInflater.from(context),
+            lstMovies,
+            object : MovieAdapter.IMovieItemActions {
+                override fun openMovieDetail(movieData: Movie) {
+                    val bundleMovieData: Bundle = bundleOf("movieData" to movieData)
+                    findNavController().navigate(
+                        R.id.action_home_destination_to_movie_detail_destination,
+                        bundleMovieData
+                    )
+                }
+
+                override fun removeFromFavourite(movie: Movie) {
+                    lstMovies[lstMovies.indexOf(movie)].flagFavourite = false
+                }
+            }
+        )
     }
 }

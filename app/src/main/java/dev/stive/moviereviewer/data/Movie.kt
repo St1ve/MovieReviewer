@@ -32,7 +32,9 @@ data class Movie(
     val voteAverage: Double? = null,
 
     @field:SerializedName("id")
-    val id: Int
+    val id: Int,
+
+    var flagFavourite: Boolean = false
 ) : Parcelable {
     @field:SerializedName("poster_path")
     var posterPath: String? = null

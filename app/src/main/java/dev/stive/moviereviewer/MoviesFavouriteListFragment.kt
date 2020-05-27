@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
-import dev.stive.moviereviewer.MainActivity.Companion.lstMovieFavourite
+import dev.stive.moviereviewer.MainActivity.Companion.lstMovies
 import dev.stive.moviereviewer.data.Movie
 import dev.stive.moviereviewer.recyclerMovie.MovieAdapter
 
@@ -20,6 +20,7 @@ import dev.stive.moviereviewer.recyclerMovie.MovieAdapter
  */
 class MoviesFavouriteListFragment : Fragment() {
     private lateinit var adapter: MovieAdapter
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,16 +33,17 @@ class MoviesFavouriteListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val lstFavouritMovies = ArrayList<Movie>()
+        for (movie in lstMovies) {
+            if (movie.flagFavourite)
+                lstFavouritMovies.add(movie)
+        }
+
         adapter = MovieAdapter(
             view,
             LayoutInflater.from(context),
-            lstMovieFavourite,
-            true,
+            lstFavouritMovies,
             object : MovieAdapter.IMovieItemActions {
-                override fun notifyDelete(position: Int) {
-                    adapter.notifyItemRemoved(position)
-                }
-
                 override fun openMovieDetail(movieData: Movie) {
                     val bundleMovieData: Bundle = bundleOf("movieData" to movieData)
                     findNavController().navigate(
@@ -49,12 +51,24 @@ class MoviesFavouriteListFragment : Fragment() {
                         bundleMovieData
                     )
                 }
+
+                override fun removeFromFavourite(movie: Movie) {
+                    lstMovies[lstMovies.indexOf(movie)].flagFavourite = false
+                    val removedPosition = lstFavouritMovies.indexOf(movie)
+                    lstFavouritMovies.removeAt(removedPosition)
+                    adapter.notifyItemRemoved(removedPosition)
+                }
             }
         )
 
-        val rvMovieItemFavourite =  view.findViewById<RecyclerView>(R.id.rvFavouriteMovies)
+        val rvMovieItemFavourite = view.findViewById<RecyclerView>(R.id.rvFavouriteMovies)
         rvMovieItemFavourite.adapter = adapter
-        if(resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
-            rvMovieItemFavourite.addItemDecoration(DividerItemDecoration(context,DividerItemDecoration.VERTICAL))
+        if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
+            rvMovieItemFavourite.addItemDecoration(
+                DividerItemDecoration(
+                    context,
+                    DividerItemDecoration.VERTICAL
+                )
+            )
     }
 }

@@ -11,7 +11,6 @@ class MovieAdapter(
     private val view: View,
     private val inflater: LayoutInflater,
     private val lstMoviesItems: List<Movie>,
-    private val flagFavourite: Boolean,
     private val iMovieItemActions: IMovieItemActions
 ) :
     RecyclerView.Adapter<MovieViewHolder>() {
@@ -29,11 +28,12 @@ class MovieAdapter(
     override fun getItemCount() = lstMoviesItems.size
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        holder.bind(view, lstMoviesItems[position], position, iMovieItemActions, flagFavourite)
+        holder.bind(view, lstMoviesItems[position], position, iMovieItemActions)
     }
 
     interface IMovieItemActions {
-        fun notifyDelete(position: Int)
         fun openMovieDetail(movieData: Movie)
+
+        fun removeFromFavourite(movie: Movie)
     }
 }
