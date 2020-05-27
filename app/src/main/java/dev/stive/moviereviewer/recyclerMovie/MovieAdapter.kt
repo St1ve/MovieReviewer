@@ -13,27 +13,44 @@ class MovieAdapter(
     private val lstMoviesItems: List<Movie>,
     private val iMovieItemActions: IMovieItemActions
 ) :
-    RecyclerView.Adapter<MovieViewHolder>() {
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
-        return MovieViewHolder(
-            inflater.inflate(
-                R.layout.item_movies,
-                parent,
-                false
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return when (viewType) {
+            VIEW_TYPE_ITEM -> MovieViewHolder(
+                inflater.inflate(
+                    R.layout.item_movies,
+                    parent,
+                    false
+                )
             )
-        )
+            else -> LoadingViewHolder(
+                inflater.inflate(
+                    R.layout.item_movie_footer,
+                    parent,
+                    false
+                )
+            )
+        }
     }
 
-    override fun getItemCount() = lstMoviesItems.size
+    override fun getItemCount() = lstMoviesItems.size + 1 // +1 = CountItems + Footer
 
-    override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        holder.bind(view, lstMoviesItems[position], position, iMovieItemActions)
+    override fun getItemViewType(position: Int): Int {
+        return if (position == lstMoviesItems.size) VIEW_TYPE_FOOTER else VIEW_TYPE_ITEM
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if (holder is MovieViewHolder)
+            holder.bind(view, lstMoviesItems[position], position, iMovieItemActions)
     }
 
     interface IMovieItemActions {
         fun openMovieDetail(movieData: Movie)
-
         fun removeFromFavourite(movie: Movie)
+    }
+
+    companion object {
+        const val VIEW_TYPE_ITEM = 0
+        const val VIEW_TYPE_FOOTER = 1
     }
 }
