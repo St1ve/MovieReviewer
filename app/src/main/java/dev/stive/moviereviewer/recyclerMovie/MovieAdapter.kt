@@ -15,6 +15,7 @@ class MovieAdapter(
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+
         return when (viewType) {
             VIEW_TYPE_ITEM -> MovieViewHolder(
                 inflater.inflate(

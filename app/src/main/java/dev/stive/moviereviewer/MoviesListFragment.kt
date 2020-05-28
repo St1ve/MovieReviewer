@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.core.view.get
+import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -57,8 +59,10 @@ class MoviesListFragment : Fragment() {
             setMoviesToRecyclerView(view)
         }
 
-        if (lstMovies.isEmpty())
+        if (lstMovies.isEmpty()){
+            setupRecyclerViewAdapter(view)
             setMoviesToRecyclerView(view)
+        }
         else
             setupRecyclerViewAdapter(view)
 
