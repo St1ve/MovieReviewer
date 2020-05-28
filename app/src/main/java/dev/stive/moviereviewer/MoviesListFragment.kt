@@ -61,14 +61,14 @@ class MoviesListFragment : Fragment() {
         srMovieList = view.findViewById<SwipeRefreshLayout>(R.id.srFragmentMovies)
 
         srMovieList.setOnRefreshListener {
-            setMoviesToRecyclerView(view)
+            loadStartedMovies(view)
         }
 
         if (lstMovies.isEmpty()) {
             //setup empty recycler view (adding progress bar)
             setupRecyclerViewAdapter(view)
             //get movies from api
-            setMoviesToRecyclerView(view)
+            loadStartedMovies(view)
         } else{
             setupRecyclerViewAdapter(view)
             rvMovieItem.scrollToPosition(currentPosition)
@@ -128,7 +128,7 @@ class MoviesListFragment : Fragment() {
         outState.putInt(KEY_CURRENT_POSITION, currentPosition)
     }
 
-    private fun setMoviesToRecyclerView(
+    private fun loadStartedMovies(
         view: View
     ) {
         val call: Call<MovieResponse> = MovieApiClient.apiClient.getTopRatedMovies(
