@@ -14,6 +14,17 @@ class MovieAdapter(
     private val iMovieItemActions: IMovieItemActions
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    /*
+    * true - show progressbar
+    * false - hide progressbar
+    */
+    private var isLoading:Boolean = false
+
+    fun setLoading(status:Boolean){
+        isLoading = status
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
         return when (viewType) {
@@ -43,6 +54,8 @@ class MovieAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is MovieViewHolder)
             holder.bind(view, lstMoviesItems[position], position, iMovieItemActions)
+        if (holder is LoadingViewHolder)
+            holder.bind(isLoading)
     }
 
     interface IMovieItemActions {

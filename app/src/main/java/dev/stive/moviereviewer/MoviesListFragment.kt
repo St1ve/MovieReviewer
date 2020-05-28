@@ -7,8 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import androidx.core.view.get
-import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -27,7 +25,6 @@ import retrofit2.Response
 import java.util.*
 
 class MoviesListFragment : Fragment() {
-    private lateinit var adapter: MovieAdapter
     private lateinit var srMovieList: SwipeRefreshLayout
     private lateinit var rvMovieItem: RecyclerView
 
@@ -59,11 +56,12 @@ class MoviesListFragment : Fragment() {
             setMoviesToRecyclerView(view)
         }
 
-        if (lstMovies.isEmpty()){
+        if (lstMovies.isEmpty()) {
+            //setup empty recycler view (adding progress bar)
             setupRecyclerViewAdapter(view)
+            //get movies from api
             setMoviesToRecyclerView(view)
-        }
-        else
+        } else
             setupRecyclerViewAdapter(view)
 
         rvMovieItem.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -72,7 +70,7 @@ class MoviesListFragment : Fragment() {
                     (recyclerView.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
 
                 if (positionLast == lstMovies.size - 1 && !isLoading) {
-                    isLoading = true
+                    setStatusLoading(true)
                     loadNextPage(positionLast)
                 }
             }
@@ -96,7 +94,7 @@ class MoviesListFragment : Fragment() {
         call.enqueue(object : Callback<MovieResponse> {
             override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
                 lstMovies.addAll(response.body()!!.results)
-                isLoading = false
+                setStatusLoading(false)
                 rvMovieItem.adapter?.notifyItemRangeChanged(startPosition, lstMovies.size - 1)
             }
 
@@ -107,9 +105,8 @@ class MoviesListFragment : Fragment() {
                     R.string.msg_error_cant_load_movies,
                     Snackbar.LENGTH_SHORT
                 ).show()
-                isLoading = false
+                setStatusLoading(false)
             }
-
         })
     }
 
@@ -127,8 +124,9 @@ class MoviesListFragment : Fragment() {
                 lstMovies = response.body()!!.results as ArrayList<Movie>
 
                 setupRecyclerViewAdapter(view)
-                Log.d("Test","${lstMovies.size}")
+                Log.d("Test", "${lstMovies.size}")
                 srMovieList.isRefreshing = false
+                setStatusLoading(false)
             }
 
             override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
@@ -139,8 +137,17 @@ class MoviesListFragment : Fragment() {
                     Snackbar.LENGTH_SHORT
                 ).show()
                 srMovieList.isRefreshing = false
+                setStatusLoading(false)
             }
         })
+    }
+
+    private fun setStatusLoading(status: Boolean) {
+        this.isLoading = status
+        (rvMovieItem.adapter as MovieAdapter).setLoading(status)
+
+        val indexLastItem = (rvMovieItem.adapter as MovieAdapter).itemCount - 1
+        (rvMovieItem.adapter as MovieAdapter).notifyItemChanged(indexLastItem)
     }
 
     private fun setupRecyclerViewAdapter(view: View) {
