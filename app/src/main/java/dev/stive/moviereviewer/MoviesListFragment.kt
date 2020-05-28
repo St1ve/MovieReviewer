@@ -34,7 +34,8 @@ class MoviesListFragment : Fragment() {
     * false - we didn't loading anything
     */
     private var isLoading = false
-
+    //Current position of recyclerview
+    private var currentPosition = 0
     //Shows, how many pages we already have loaded
     private var currentPages: Int = 1
 
@@ -49,6 +50,13 @@ class MoviesListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        if (savedInstanceState != null){
+            if (savedInstanceState.containsKey(KEY_CURRENT_POSITION))
+                currentPosition = savedInstanceState.getInt(KEY_CURRENT_POSITION)
+            if (savedInstanceState.containsKey(KEY_CURRENT_PAGE))
+                currentPosition = savedInstanceState.getInt(KEY_CURRENT_PAGE)
+        }
+
         rvMovieItem = view.findViewById<RecyclerView>(R.id.rvMovies)
         srMovieList = view.findViewById<SwipeRefreshLayout>(R.id.srFragmentMovies)
 
@@ -61,17 +69,20 @@ class MoviesListFragment : Fragment() {
             setupRecyclerViewAdapter(view)
             //get movies from api
             setMoviesToRecyclerView(view)
-        } else
+        } else{
             setupRecyclerViewAdapter(view)
+            rvMovieItem.scrollToPosition(currentPosition)
+        }
+
 
         rvMovieItem.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                val positionLast: Int =
+                currentPosition =
                     (recyclerView.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
 
-                if (positionLast == lstMovies.size - 1 && !isLoading) {
+                if (currentPosition == lstMovies.size - 1 && !isLoading) {
                     setStatusLoading(true)
-                    loadNextPage(positionLast)
+                    loadNextPage()
                 }
             }
         })
@@ -82,7 +93,7 @@ class MoviesListFragment : Fragment() {
             )
     }
 
-    private fun loadNextPage(startPosition: Int) {
+    private fun loadNextPage() {
         currentPages++
 
         val call: Call<MovieResponse> = MovieApiClient.apiClient.getTopRatedMovies(
@@ -95,7 +106,7 @@ class MoviesListFragment : Fragment() {
             override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
                 lstMovies.addAll(response.body()!!.results)
                 setStatusLoading(false)
-                rvMovieItem.adapter?.notifyItemRangeChanged(startPosition, lstMovies.size - 1)
+                rvMovieItem.adapter?.notifyItemRangeChanged(currentPosition, lstMovies.size - 1)
             }
 
             override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
@@ -108,6 +119,13 @@ class MoviesListFragment : Fragment() {
                 setStatusLoading(false)
             }
         })
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        outState.putInt(KEY_CURRENT_PAGE, currentPages)
+        outState.putInt(KEY_CURRENT_POSITION, currentPosition)
     }
 
     private fun setMoviesToRecyclerView(
@@ -169,5 +187,10 @@ class MoviesListFragment : Fragment() {
                 }
             }
         )
+    }
+
+    companion object{
+        private const val KEY_CURRENT_PAGE = "currentPage"
+        private const val KEY_CURRENT_POSITION = "currentPosition"
     }
 }
