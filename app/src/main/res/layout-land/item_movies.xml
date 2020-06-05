@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent">
+
+    <TextView
+        app:layout_constraintHorizontal_weight="3"
+        android:id="@+id/txtTitleMovie"
+        style="@style/MovieTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="10dp"
+        android:maxLines="2"
+        android:textSize="18sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="@id/imgPosterMovie"
+        app:layout_constraintEnd_toStartOf="@id/chkAddToFavourite"
+        app:layout_constraintBottom_toTopOf="@id/imgPosterMovie"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        tools:text="Movie Title" />
+
+    <CheckBox
+        app:layout_constraintHorizontal_weight="1"
+        android:id="@+id/chkAddToFavourite"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="20dp"
+        android:button="@drawable/selector_add_to_favourite_switcher"
+        app:layout_constraintStart_toEndOf="@id/txtTitleMovie"
+        app:layout_constraintTop_toTopOf="@id/txtTitleMovie"
+        app:layout_constraintEnd_toEndOf="@id/imgPosterMovie"/>
+
+    <ImageView
+        android:id="@+id/imgPosterMovie"
+        android:layout_width="220dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/btnDetailMovie"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtTitleMovie"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:src="@drawable/ic_placeholder_image_black_32dp" />
+
+    <TextView
+        android:id="@+id/txtDescriptionMovie"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:maxLines="6"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@id/imgPosterMovie"
+        app:layout_constraintTop_toBottomOf="@id/txtTitleMovie" />
+
+    <Button
+        android:id="@+id/btnDetailMovie"
+        style="@style/ButtonsMovieDetails"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="@string/btn_movie_detail"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/imgPosterMovie"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imgPosterMovie"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,133 +1,106 @@
 package dev.stive.moviereviewer
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.content.DialogInterface
-import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
-import android.widget.TextView
+import android.view.MenuItem
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ShareCompat
-import androidx.core.content.ContextCompat
+import androidx.appcompat.widget.Toolbar
+import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import androidx.navigation.get
+import androidx.navigation.ui.onNavDestinationSelected
+import androidx.navigation.ui.setupWithNavController
+import dev.stive.moviereviewer.data.Movie
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-
-    private lateinit var btnWhoAmI: Button
-    private lateinit var btnAccountent: Button
-    private lateinit var btnIronMan: Button
-    private lateinit var btnInvitation: Button
-
-    private lateinit var txtWhoAmI: TextView
-    private lateinit var txtAccountent: TextView
-    private lateinit var txtIronMan: TextView
+    private lateinit var drawer: DrawerLayout
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        btnWhoAmI = findViewById(R.id.btnWhoAmI)
-        btnIronMan = findViewById(R.id.btnIronMan)
-        btnAccountent = findViewById(R.id.btnAccountent)
-        btnInvitation = findViewById(R.id.btnInvitation)
-
-        txtWhoAmI = findViewById(R.id.txtWhoAmI)
-        txtIronMan = findViewById(R.id.txtIronMan)
-        txtAccountent = findViewById(R.id.txtAccountent)
-
-
-        btnInvitation.setOnClickListener {
-            val textInvitation = "Hi, I am using MovieReviewer and you to do this too)"
-            val mimeType = "text/plain"
-            ShareCompat.IntentBuilder.from(this)
-                .setType(mimeType)
-                .setChooserTitle("Invitation Sender")
-                .setText(textInvitation).startChooser()
+        if ((savedInstanceState != null) && (savedInstanceState.containsKey(KEY_LST_MOVIES))) {
+            lstMovies =
+                savedInstanceState.getParcelableArrayList<Movie>(KEY_LST_MOVIES)!!
         }
 
-        btnWhoAmI.setOnClickListener {
-            txtWhoAmI.setTextColor(ContextCompat.getColor(this, R.color.colorMovieTitleTouched))
-            getAnswerFromExplicitIntent(txtWhoAmI.text as String, R.drawable.who_am_i)
-        }
+        val toolbar = findViewById<Toolbar>(R.id.toolBarMain)
+        setSupportActionBar(toolbar)
 
-        btnAccountent.setOnClickListener {
-            txtAccountent.setTextColor(ContextCompat.getColor(this, R.color.colorMovieTitleTouched))
-            getAnswerFromExplicitIntent(txtAccountent.text as String, R.drawable.accountent)
-        }
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment)
+        setupNavigationMenu(navController)
 
-        btnIronMan.setOnClickListener {
-            txtIronMan.setTextColor(ContextCompat.getColor(this, R.color.colorMovieTitleTouched))
-            getAnswerFromExplicitIntent(txtIronMan.text as String, R.drawable.ironman)
+        if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            setupBottomNavigationMenu(navController)
+        } else {
+            drawer = findViewById<DrawerLayout>(R.id.main_drawer_layout)
+            val toggle = ActionBarDrawerToggle(
+                this,
+                drawer,
+                toolbar,
+                R.string.navigation_drawer_open,
+                R.string.navigation_drawer_closed
+            )
+            drawer.addDrawerListener(toggle)
+            toggle.syncState()
         }
+    }
+
+    private fun setupBottomNavigationMenu(controller: NavController) {
+        nav_bottom_bar?.setupWithNavController(controller)
+    }
+
+    private fun setupNavigationMenu(controller: NavController) {
+        nav_view?.setupWithNavController(controller)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return item.onNavDestinationSelected(findNavController(R.id.nav_host_fragment)) ||
+                super.onOptionsItemSelected(item)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
-        outState.putInt(KEY_ACCOUNTENT, txtAccountent.currentTextColor)
-        outState.putInt(KEY_IRON_MAN, txtIronMan.currentTextColor)
-        outState.putInt(KEY_WHO_AM_I, txtWhoAmI.currentTextColor)
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-        txtAccountent.setTextColor(savedInstanceState.getInt(KEY_ACCOUNTENT))
-        txtIronMan.setTextColor(savedInstanceState.getInt(KEY_IRON_MAN))
-        txtWhoAmI.setTextColor(savedInstanceState.getInt(KEY_WHO_AM_I))
-        Log.i("MainActivity", "onRestoreInstanceState")
-    }
-
-    private fun getAnswerFromExplicitIntent(movieName: String, imgRes: Int) {
-        // Passing value of "key"
-        val intent = Intent(this@MainActivity, ActivityMovie::class.java)
-        intent.putExtra(MOVIE_DATA, PassData(movieName, imgRes))
-        startActivityForResult(intent, OUR_REQUEST_CODE)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == OUR_REQUEST_CODE) {
-            var movieComment: String? = null
-            var movieFavouriteFlag: Boolean? = null
-            if (resultCode == Activity.RESULT_OK) {
-                data?.let {
-                    movieComment = it.getStringExtra(MOVIE_COMMENT)
-                    movieFavouriteFlag = it.getBooleanExtra(MOVIE_FAVOURITE_STATE,false)
-                }
-            }
-            Log.i("MainActivity","User comment:$movieComment\n Liked:$movieFavouriteFlag")
-        }
+        outState.putParcelableArrayList(KEY_LST_MOVIES, lstMovies)
     }
 
     override fun onBackPressed() {
-        showQuitDialog()
+        Log.d("OnBackPressed", "Graph:${navController.currentDestination}")
+        val destination = navController.graph[R.id.movie_detail_destination]
+        if (navController.currentDestination == destination)
+            super.onBackPressed()
+        else
+            showQuitDialog()
     }
 
-    fun showQuitDialog(){
+    private fun showQuitDialog() {
         val alertDialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this)
-        Log.i("action", "Show quit dialog")
 
-        val actionCancel = DialogInterface.OnClickListener { dialog, which -> dialog.dismiss()}
+        val actionCancel = DialogInterface.OnClickListener { dialog, which -> dialog.dismiss() }
 
-        val actionAccept = DialogInterface.OnClickListener { dialog, which -> finishAffinity()}
+        val actionAccept = DialogInterface.OnClickListener { dialog, which -> finishAffinity() }
 
         alertDialogBuilder.setMessage(getString(R.string.alert_dialog_quit_message))
         alertDialogBuilder.setTitle(getString(R.string.alert_dialog_quit_title))
         alertDialogBuilder.setNegativeButton("No", actionCancel)
-        alertDialogBuilder.setPositiveButton("Yes",actionAccept)
+        alertDialogBuilder.setPositiveButton("Yes", actionAccept)
         val dialog: AlertDialog = alertDialogBuilder.create()
         dialog.show()
     }
 
     companion object {
-        const val KEY_WHO_AM_I = "who_am_i"
-        const val KEY_ACCOUNTENT = "accountent"
-        const val KEY_IRON_MAN = "iron_man"
-        const val MOVIE_DATA = "MovieDate"
-        const val OUR_REQUEST_CODE = 42
-        const val MOVIE_COMMENT = "MovieComment"
-        const val MOVIE_FAVOURITE_STATE = "Favourite"
+        const val KEY_LST_MOVIES = "lstFavouriteMovies"
+        var lstMovies = ArrayList<Movie>()
     }
+
 }
