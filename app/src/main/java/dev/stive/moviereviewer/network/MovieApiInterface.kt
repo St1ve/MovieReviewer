@@ -9,15 +9,11 @@ interface MovieApiInterface {
 
     @GET("/3/movie/popular")
     fun getPopularMovies(
-        @Query("api_key") apiKey: String,
-        @Query("page") page: Int,
-        @Query("language") language: String
+        @Query("page") page: Int
     ): Call<MovieResponse>
 
     @GET("/3/movie/top_rated")
     fun getTopRatedMovies(
-        @Query("api_key") apiKey: String,
-        @Query("page") page: Int,
-        @Query("language") language: String
+        @Query("page") page: Int
     ): Call<MovieResponse>
 }

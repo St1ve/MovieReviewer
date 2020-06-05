@@ -34,8 +34,10 @@ class MoviesListFragment : Fragment() {
     * false - we didn't loading anything
     */
     private var isLoading = false
+
     //Current position of recyclerview
     private var currentPosition = 0
+
     //Shows, how many pages we already have loaded
     private var currentPages: Int = 1
 
@@ -50,7 +52,7 @@ class MoviesListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (savedInstanceState != null){
+        if (savedInstanceState != null) {
             if (savedInstanceState.containsKey(KEY_CURRENT_POSITION))
                 currentPosition = savedInstanceState.getInt(KEY_CURRENT_POSITION)
             if (savedInstanceState.containsKey(KEY_CURRENT_PAGE))
@@ -69,7 +71,7 @@ class MoviesListFragment : Fragment() {
             setupRecyclerViewAdapter(view)
             //get movies from api
             loadStartedMovies(view)
-        } else{
+        } else {
             setupRecyclerViewAdapter(view)
             rvMovieItem.scrollToPosition(currentPosition)
         }
@@ -97,9 +99,7 @@ class MoviesListFragment : Fragment() {
         currentPages++
 
         val call: Call<MovieResponse> = MovieApiClient.apiClient.getTopRatedMovies(
-            MovieApiClient.API_KEY,
-            currentPages,
-            Locale.getDefault().language
+            currentPages
         )
 
         call.enqueue(object : Callback<MovieResponse> {
@@ -132,17 +132,16 @@ class MoviesListFragment : Fragment() {
         view: View
     ) {
         val call: Call<MovieResponse> = MovieApiClient.apiClient.getTopRatedMovies(
-            MovieApiClient.API_KEY,
-            1,
-            Locale.getDefault().language
+            1
         )
+
+        Log.d("Test", "Request:${call.request()}")
 
         call.enqueue(object : Callback<MovieResponse> {
             override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
                 lstMovies = response.body()!!.results as ArrayList<Movie>
 
                 setupRecyclerViewAdapter(view)
-                Log.d("Test", "${lstMovies.size}")
                 srMovieList.isRefreshing = false
                 setStatusLoading(false)
             }
@@ -189,7 +188,7 @@ class MoviesListFragment : Fragment() {
         )
     }
 
-    companion object{
+    companion object {
         private const val KEY_CURRENT_PAGE = "currentPage"
         private const val KEY_CURRENT_POSITION = "currentPosition"
     }
