@@ -1,4 +1,4 @@
-package dev.stive.moviereviewer.recyclerMovie
+package dev.stive.moviereviewer.presenter.recyclerview.holders
 
 import android.view.View
 import android.widget.ProgressBar

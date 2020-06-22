@@ -1,4 +1,4 @@
-package dev.stive.moviereviewer.recyclerMovie
+package dev.stive.moviereviewer.presenter.recyclerview.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,14 +6,24 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import dev.stive.moviereviewer.R
 import dev.stive.moviereviewer.data.Movie
+import dev.stive.moviereviewer.presenter.recyclerview.holders.LoadingViewHolder
+import dev.stive.moviereviewer.presenter.recyclerview.holders.MovieViewHolder
 
 class MovieAdapter(
     private val view: View,
     private val inflater: LayoutInflater,
-    private val lstMoviesItems: List<Movie>,
     private val iMovieItemActions: IMovieItemActions
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    private var lstMoviesItems = ArrayList<Movie>()
+
+    fun setItems(lstItems: List<Movie>){
+        lstMoviesItems.clear()
+        lstMoviesItems.addAll(lstItems)
+
+        this.notifyDataSetChanged()
+    }
 
     /*
     * true - show progressbar

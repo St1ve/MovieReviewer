@@ -1,4 +1,4 @@
-package dev.stive.moviereviewer
+package dev.stive.moviereviewer.presenter.detailmoviepage
 
 
 import android.os.Bundle
@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+import dev.stive.moviereviewer.R
 import dev.stive.moviereviewer.data.Movie
 import java.util.*
 

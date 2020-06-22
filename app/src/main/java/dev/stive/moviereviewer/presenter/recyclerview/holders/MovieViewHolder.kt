@@ -1,4 +1,4 @@
-package dev.stive.moviereviewer.recyclerMovie
+package dev.stive.moviereviewer.presenter.recyclerview.holders
 
 import android.view.View
 import android.widget.Button
@@ -8,9 +8,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
-import dev.stive.moviereviewer.MainActivity.Companion.lstMovies
+import dev.stive.moviereviewer.presenter.MainActivity.Companion.lstMovies
 import dev.stive.moviereviewer.R
 import dev.stive.moviereviewer.data.Movie
+import dev.stive.moviereviewer.presenter.recyclerview.adapters.MovieAdapter
 
 class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val titleTv: TextView = itemView.findViewById(R.id.txtTitleMovie)

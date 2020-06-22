@@ -6,7 +6,7 @@
     app:startDestination="@+id/home_destination">
     <fragment
         android:id="@+id/favourite_movies_destination"
-        android:name="dev.stive.moviereviewer.MoviesFavouriteListFragment"
+        android:name="dev.stive.moviereviewer.presenter.favouritemoviepage.MoviesFavouriteListFragment"
         android:label="MoviesFavouriteListFragment" >
         <action
             android:id="@+id/action_favourite_movies_destination_to_movie_detail_destination"
@@ -14,7 +14,7 @@
     </fragment>
     <fragment
         android:id="@+id/home_destination"
-        android:name="dev.stive.moviereviewer.MoviesListFragment"
+        android:name="dev.stive.moviereviewer.presenter.mainmoviepage.MoviesListFragment"
         android:label="MoviesListFragment" >
         <action
             android:id="@+id/action_home_destination_to_movie_detail_destination"
@@ -22,7 +22,7 @@
     </fragment>
     <fragment
         android:id="@+id/movie_detail_destination"
-        android:name="dev.stive.moviereviewer.MovieDetailFragment"
+        android:name="dev.stive.moviereviewer.presenter.detailmoviepage.MovieDetailFragment"
         android:label="fragment_movie_detail"
         tools:layout="@layout/fragment_movie_detail" >
         <argument

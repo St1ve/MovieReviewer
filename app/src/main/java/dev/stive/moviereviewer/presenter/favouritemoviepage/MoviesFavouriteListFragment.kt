@@ -1,4 +1,4 @@
-package dev.stive.moviereviewer
+package dev.stive.moviereviewer.presenter.favouritemoviepage
 
 
 import android.content.res.Configuration
@@ -11,13 +11,11 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
-import dev.stive.moviereviewer.MainActivity.Companion.lstMovies
+import dev.stive.moviereviewer.R
+import dev.stive.moviereviewer.presenter.MainActivity.Companion.lstMovies
 import dev.stive.moviereviewer.data.Movie
-import dev.stive.moviereviewer.recyclerMovie.MovieAdapter
+import dev.stive.moviereviewer.presenter.recyclerview.adapters.MovieAdapter
 
-/**
- * A simple [Fragment] subclass.
- */
 class MoviesFavouriteListFragment : Fragment() {
     private lateinit var adapter: MovieAdapter
 
@@ -42,8 +40,8 @@ class MoviesFavouriteListFragment : Fragment() {
         adapter = MovieAdapter(
             view,
             LayoutInflater.from(context),
-            lstFavouritMovies,
-            object : MovieAdapter.IMovieItemActions {
+            object :
+                MovieAdapter.IMovieItemActions {
                 override fun openMovieDetail(movieData: Movie) {
                     val bundleMovieData: Bundle = bundleOf("movieData" to movieData)
                     findNavController().navigate(

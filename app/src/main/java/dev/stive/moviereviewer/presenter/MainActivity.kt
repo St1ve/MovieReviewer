@@ -1,4 +1,4 @@
-package dev.stive.moviereviewer
+package dev.stive.moviereviewer.presenter
 
 import android.app.AlertDialog
 import android.content.DialogInterface
@@ -16,6 +16,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.get
 import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
+import dev.stive.moviereviewer.R
 import dev.stive.moviereviewer.data.Movie
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -36,7 +37,9 @@ class MainActivity : AppCompatActivity() {
         val toolbar = findViewById<Toolbar>(R.id.toolBarMain)
         setSupportActionBar(toolbar)
 
-        navController = Navigation.findNavController(this, R.id.nav_host_fragment)
+        navController = Navigation.findNavController(this,
+            R.id.nav_host_fragment
+        )
         setupNavigationMenu(navController)
 
         if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
@@ -71,7 +74,10 @@ class MainActivity : AppCompatActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
-        outState.putParcelableArrayList(KEY_LST_MOVIES, lstMovies)
+        outState.putParcelableArrayList(
+            KEY_LST_MOVIES,
+            lstMovies
+        )
     }
 
     override fun onBackPressed() {
