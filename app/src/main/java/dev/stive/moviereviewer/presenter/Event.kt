@@ -1,5 +1,6 @@
 package dev.stive.moviereviewer.presenter
 
+// Single Event for Observation
 open class Event<out T>(private val content: T) {
 
     var hasBeenHandled = false

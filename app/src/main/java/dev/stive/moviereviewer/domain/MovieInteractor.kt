@@ -29,7 +29,7 @@ class MovieInteractor(private val movieApiInterface: MovieApiInterface) {
     }
 
     interface IGetMovieCallBack {
-        fun onSuccess(lstMovies: List<Movie>)
+        fun onSuccess(lstMovies: List<Movie>?)
         fun onError(error: String)
     }
 }

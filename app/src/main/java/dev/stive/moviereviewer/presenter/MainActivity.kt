@@ -90,23 +90,23 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showQuitDialog() {
-        val alertDialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this)
+    val alertDialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this)
 
-        val actionCancel = DialogInterface.OnClickListener { dialog, which -> dialog.dismiss() }
+    val actionCancel = DialogInterface.OnClickListener { dialog, which -> dialog.dismiss() }
 
-        val actionAccept = DialogInterface.OnClickListener { dialog, which -> finishAffinity() }
+    val actionAccept = DialogInterface.OnClickListener { dialog, which -> finishAffinity() }
 
-        alertDialogBuilder.setMessage(getString(R.string.alert_dialog_quit_message))
-        alertDialogBuilder.setTitle(getString(R.string.alert_dialog_quit_title))
-        alertDialogBuilder.setNegativeButton("No", actionCancel)
-        alertDialogBuilder.setPositiveButton("Yes", actionAccept)
-        val dialog: AlertDialog = alertDialogBuilder.create()
-        dialog.show()
-    }
+    alertDialogBuilder.setMessage(getString(R.string.alert_dialog_quit_message))
+    alertDialogBuilder.setTitle(getString(R.string.alert_dialog_quit_title))
+    alertDialogBuilder.setNegativeButton("No", actionCancel)
+    alertDialogBuilder.setPositiveButton("Yes", actionAccept)
+    val dialog: AlertDialog = alertDialogBuilder.create()
+    dialog.show()
+}
 
-    companion object {
-        const val KEY_LST_MOVIES = "lstFavouriteMovies"
-        var lstMovies = ArrayList<Movie>()
-    }
+companion object {
+    const val KEY_LST_MOVIES = "lstFavouriteMovies"
+    var lstMovies = ArrayList<Movie>()
+}
 
 }

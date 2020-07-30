@@ -25,7 +25,7 @@ class MovieAdapter(
         this.notifyDataSetChanged()
     }
 
-    /*
+    /**
     * true - show progressbar
     * false - hide progressbar
     */
