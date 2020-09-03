@@ -1,23 +1,22 @@
 package dev.stive.moviereviewer
 
 import android.app.Application
-import dev.stive.moviereviewer.domain.MovieInteractor
-import dev.stive.moviereviewer.network.MovieApiClient
+import dev.stive.moviereviewer.network.MovieService
 
 class App : Application() {
 
-    lateinit var movieInteractor: MovieInteractor
+    lateinit var movieService: MovieService
 
     override fun onCreate() {
         super.onCreate()
 
         instance = this
 
-        initInteractor()
+        initMovieService()
     }
 
-    private fun initInteractor() {
-        movieInteractor = MovieInteractor(MovieApiClient.apiClient)
+    private fun initMovieService() {
+        movieService = MovieService.create()
     }
 
     companion object {

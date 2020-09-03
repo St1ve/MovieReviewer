@@ -8,12 +8,12 @@ import retrofit2.http.Query
 interface MovieApiInterface {
 
     @GET("/3/movie/popular")
-    fun getPopularMovies(
+    suspend fun getPopularMovies(
         @Query("page") page: Int
-    ): Call<MovieResponse>
+    ): MovieResponse
 
     @GET("/3/movie/top_rated")
-    fun getTopRatedMovies(
+    suspend fun getTopRatedMovies(
         @Query("page") page: Int
-    ): Call<MovieResponse>
+    ): MovieResponse
 }

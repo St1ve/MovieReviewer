@@ -1,4 +1,4 @@
-package dev.stive.moviereviewer.presenter.detailmoviepage
+package dev.stive.moviereviewer.ui
 
 
 import android.os.Bundle

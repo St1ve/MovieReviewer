@@ -1,4 +1,4 @@
-package dev.stive.moviereviewer.presenter.recyclerview.holders
+package dev.stive.moviereviewer.ui.recyclerview.holders
 
 import android.view.View
 import android.widget.Button
@@ -8,10 +8,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
-import dev.stive.moviereviewer.presenter.MainActivity.Companion.lstMovies
 import dev.stive.moviereviewer.R
 import dev.stive.moviereviewer.data.Movie
-import dev.stive.moviereviewer.presenter.recyclerview.adapters.MovieAdapter
+import dev.stive.moviereviewer.ui.recyclerview.adapters.MoviePagedAdapter
 
 class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val titleTv: TextView = itemView.findViewById(R.id.txtTitleMovie)
@@ -24,7 +23,7 @@ class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         view: View,
         movie: Movie,
         position: Int,
-        iMovieItemActions: MovieAdapter.IMovieItemActions
+        iMovieItemActions: MoviePagedAdapter.IMovieItemActions
     ) {
         titleTv.text = movie.title
         descriptionTv.text = movie.overview
@@ -42,14 +41,13 @@ class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         chMovieFavourite.setOnClickListener {
             if (!chMovieFavourite.isChecked) {
-                iMovieItemActions.removeFromFavourite(movie)
+                iMovieItemActions.onFavouriteClick(movie)
                 Snackbar.make(
                     view,
                     "Movie ${movie.title} was deleted from favourite",
                     Snackbar.LENGTH_SHORT
                 ).show()
             } else {
-                lstMovies[position].flagFavourite = true
                 Snackbar.make(
                     view,
                     "Movie ${movie.title} was added to favourite",

@@ -1,4 +1,4 @@
-package dev.stive.moviereviewer.presenter
+package dev.stive.moviereviewer.domain
 
 // Single Event for Observation
 open class Event<out T>(private val content: T) {

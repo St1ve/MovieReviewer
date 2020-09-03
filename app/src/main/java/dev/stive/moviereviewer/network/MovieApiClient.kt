@@ -14,7 +14,7 @@ object MovieApiClient {
 
         val interceptor = OkHttpClient().newBuilder().addInterceptor { chain ->
             val originalRequest: Request = chain.request()
-            val originalUrl = originalRequest.url()
+            val originalUrl = originalRequest.url
 
             val newHttpUrl = originalUrl.newBuilder().addQueryParameter("api_key", API_KEY).addQueryParameter("language", Locale.getDefault().language).build()
             val requestBuilder: Request.Builder = originalRequest.newBuilder().url(newHttpUrl)

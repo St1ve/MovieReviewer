@@ -1,4 +1,4 @@
-package dev.stive.moviereviewer.presenter
+package dev.stive.moviereviewer.ui
 
 import android.app.AlertDialog
 import android.content.DialogInterface
@@ -29,15 +29,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        if ((savedInstanceState != null) && (savedInstanceState.containsKey(KEY_LST_MOVIES))) {
-            lstMovies =
-                savedInstanceState.getParcelableArrayList<Movie>(KEY_LST_MOVIES)!!
-        }
-
         val toolbar = findViewById<Toolbar>(R.id.toolBarMain)
         setSupportActionBar(toolbar)
 
-        navController = Navigation.findNavController(this,
+        navController = Navigation.findNavController(
+            this,
             R.id.nav_host_fragment
         )
         setupNavigationMenu(navController)
@@ -71,15 +67,6 @@ class MainActivity : AppCompatActivity() {
                 super.onOptionsItemSelected(item)
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-
-        outState.putParcelableArrayList(
-            KEY_LST_MOVIES,
-            lstMovies
-        )
-    }
-
     override fun onBackPressed() {
         Log.d("OnBackPressed", "Graph:${navController.currentDestination}")
         val destination = navController.graph[R.id.movie_detail_destination]
@@ -90,23 +77,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showQuitDialog() {
-    val alertDialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this)
+        val alertDialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this)
 
-    val actionCancel = DialogInterface.OnClickListener { dialog, which -> dialog.dismiss() }
+        val actionCancel = DialogInterface.OnClickListener { dialog, _ -> dialog.dismiss() }
 
-    val actionAccept = DialogInterface.OnClickListener { dialog, which -> finishAffinity() }
+        val actionAccept = DialogInterface.OnClickListener { _, _ -> finishAffinity() }
 
-    alertDialogBuilder.setMessage(getString(R.string.alert_dialog_quit_message))
-    alertDialogBuilder.setTitle(getString(R.string.alert_dialog_quit_title))
-    alertDialogBuilder.setNegativeButton("No", actionCancel)
-    alertDialogBuilder.setPositiveButton("Yes", actionAccept)
-    val dialog: AlertDialog = alertDialogBuilder.create()
-    dialog.show()
-}
-
-companion object {
-    const val KEY_LST_MOVIES = "lstFavouriteMovies"
-    var lstMovies = ArrayList<Movie>()
-}
-
+        alertDialogBuilder.setMessage(getString(R.string.alert_dialog_quit_message))
+        alertDialogBuilder.setTitle(getString(R.string.alert_dialog_quit_title))
+        alertDialogBuilder.setNegativeButton("No", actionCancel)
+        alertDialogBuilder.setPositiveButton("Yes", actionAccept)
+        val dialog: AlertDialog = alertDialogBuilder.create()
+        dialog.show()
+    }
 }

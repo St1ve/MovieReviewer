@@ -1,7 +1,8 @@
-package dev.stive.moviereviewer.presenter.mainmoviepage
+package dev.stive.moviereviewer.ui.mainmoviepage
 
 import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,34 +10,33 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.snackbar.Snackbar
 import dev.stive.moviereviewer.R
 import dev.stive.moviereviewer.data.Movie
-import dev.stive.moviereviewer.presenter.MainActivity.Companion.lstMovies
-import dev.stive.moviereviewer.presenter.recyclerview.adapters.MovieAdapter
-import dev.stive.moviereviewer.presenter.recyclerview.adapters.MoviePagedAdapter
+import dev.stive.moviereviewer.ui.recyclerview.adapters.MoviePagedAdapter
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class MoviesListFragment : Fragment() {
 
     private val movieViewModel: MovieViewModel by activityViewModels<MovieViewModel>()
+    private val movieFavouriteViewModel: FavouriteMovieViewModel by activityViewModels<FavouriteMovieViewModel>()
 
     private lateinit var srMovieList: SwipeRefreshLayout
     private lateinit var rvMovieItem: RecyclerView
-    private lateinit var movieAdapter: MovieAdapter
 
-    /*
+    /**
     * Flag, which shows, when films is loading
     * true - loading in progress
-    * false - we didn't loading anything
+    * false - don't loading movies
     */
-    private var isLoading = false
-
-    //Current position of recyclerview
-    private var currentPosition = 0
+    private var isLoading = true
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -78,10 +78,10 @@ class MoviesListFragment : Fragment() {
     }
 
     private fun initRecyclerView(view: View) {
-        val adapter = MoviePagedAdapter(view,
+        val movieAdapter = MoviePagedAdapter(view,
             LayoutInflater.from(context),
             object :
-                MovieAdapter.IMovieItemActions {
+                MoviePagedAdapter.IMovieItemActions {
                 override fun openMovieDetail(movieData: Movie) {
                     val bundleMovieData: Bundle = bundleOf("movieData" to movieData)
                     findNavController().navigate(
@@ -90,16 +90,20 @@ class MoviesListFragment : Fragment() {
                     )
                 }
 
-                override fun removeFromFavourite(movie: Movie) {
-                    lstMovies[lstMovies.indexOf(movie)].flagFavourite = false
+                override fun onFavouriteClick(movie: Movie) {
+//                    movieViewModel.test(movie)
+//                    movieFavouriteViewModel.addToFavourite(movie)
+                    Log.d("OnClickFavourite","Adding to favourite ....")
                 }
             }
         )
 
-        movieViewModel.mLstMovies.observe(viewLifecycleOwner, Observer {
-            adapter.submitList(it)
-        })
+        rvMovieItem.adapter = movieAdapter
 
-        rvMovieItem.adapter = adapter
+        lifecycleScope.launch {
+            movieViewModel.mLstMovies.collectLatest {
+                movieAdapter.submitData(it)
+            }
+        }
     }
 }

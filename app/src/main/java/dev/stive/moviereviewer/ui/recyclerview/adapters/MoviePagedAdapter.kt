@@ -1,16 +1,17 @@
-package dev.stive.moviereviewer.presenter.recyclerview.adapters
+package dev.stive.moviereviewer.ui.recyclerview.adapters
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import dev.stive.moviereviewer.R
 import dev.stive.moviereviewer.data.Movie
-import dev.stive.moviereviewer.presenter.recyclerview.holders.MovieViewHolder
+import dev.stive.moviereviewer.ui.recyclerview.holders.MovieViewHolder
 
-class MoviePagedAdapter(private val view: View, private val inflater: LayoutInflater,private val iMovieItemActions: MovieAdapter.IMovieItemActions) :
-    PagedListAdapter<Movie, MovieViewHolder>(
+class MoviePagedAdapter(private val view: View, private val inflater: LayoutInflater,private val iMovieItemActions: IMovieItemActions) :
+    PagingDataAdapter<Movie, MovieViewHolder>(
         DIFF_CALLBACK
     ) {
 
@@ -26,7 +27,11 @@ class MoviePagedAdapter(private val view: View, private val inflater: LayoutInfl
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         val movie = getItem(position)
-        holder.bind(view, movie?: Movie(id = 0, title = "Title", overview = "Overview"), position, iMovieItemActions)
+        holder.bind(
+            view,
+            movie?: Movie(id = 0, title = "Title", overview = "Overview"),
+            position,
+            iMovieItemActions)
     }
 
     companion object {
@@ -38,5 +43,8 @@ class MoviePagedAdapter(private val view: View, private val inflater: LayoutInfl
         }
     }
 
-
+    interface IMovieItemActions {
+        fun openMovieDetail(movieData: Movie)
+        fun onFavouriteClick(movie: Movie)
+    }
 }
