@@ -7,36 +7,33 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.core.view.isEmpty
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.snackbar.Snackbar
 import dev.stive.moviereviewer.R
 import dev.stive.moviereviewer.data.Movie
 import dev.stive.moviereviewer.ui.recyclerview.adapters.MoviePagedAdapter
+import kotlinx.android.synthetic.main.fragment_movies_list.*
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChangedBy
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
 
 class MoviesListFragment : Fragment() {
 
     private val movieViewModel: MovieViewModel by activityViewModels<MovieViewModel>()
-    private val movieFavouriteViewModel: FavouriteMovieViewModel by activityViewModels<FavouriteMovieViewModel>()
 
     private lateinit var srMovieList: SwipeRefreshLayout
     private lateinit var rvMovieItem: RecyclerView
-
-    /**
-    * Flag, which shows, when films is loading
-    * true - loading in progress
-    * false - don't loading movies
-    */
-    private var isLoading = true
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,7 +43,6 @@ class MoviesListFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_movies_list, container, false)
     }
 
-    //TODO Добавить свайп ту рефреш и подгрузку фильмов
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -54,20 +50,7 @@ class MoviesListFragment : Fragment() {
         srMovieList = view.findViewById<SwipeRefreshLayout>(R.id.srFragmentMovies)
 
         initRecyclerView(view)
-        setObservers(view)
         setRecyclerViewDivider()
-    }
-
-    private fun setObservers(view: View) {
-        movieViewModel.error.observe(viewLifecycleOwner, Observer { eventError ->
-            eventError.getContentIfNotHandled()?.let { error ->
-                Snackbar.make(view, error, Snackbar.LENGTH_SHORT).show()
-            }
-        })
-
-        movieViewModel.isLoading.observe(viewLifecycleOwner, Observer {
-            this.isLoading = it
-        })
     }
 
     private fun setRecyclerViewDivider() {
@@ -91,14 +74,43 @@ class MoviesListFragment : Fragment() {
                 }
 
                 override fun onFavouriteClick(movie: Movie) {
-//                    movieViewModel.test(movie)
-//                    movieFavouriteViewModel.addToFavourite(movie)
-                    Log.d("OnClickFavourite","Adding to favourite ....")
+                    Log.d("OnClickFavourite", "Adding to favourite ....")
                 }
             }
         )
 
+        srMovieList.setOnRefreshListener {
+            movieAdapter.refresh()
+        }
+
+        movieAdapter.addLoadStateListener { loadState ->
+            pbLoading.isVisible =
+                loadState.source.refresh is LoadState.Loading && rvMovieItem.isEmpty()
+            srMovieList.isRefreshing =
+                loadState.source.refresh is LoadState.Loading && !rvMovieItem.isEmpty()
+
+            val errorState = loadState.refresh as? LoadState.Error
+                ?: loadState.append as? LoadState.Error
+                ?: loadState.prepend as? LoadState.Error
+
+            errorState?.let {
+                Snackbar.make(
+                    view,
+                    "Error: ${it.error}",
+                    Snackbar.LENGTH_LONG
+                ).show()
+            }
+        }
+
         rvMovieItem.adapter = movieAdapter
+
+        // Scroll to top when the list is refreshed from network.
+        lifecycleScope.launch {
+            movieAdapter.loadStateFlow
+                .distinctUntilChangedBy { it.refresh }
+                .filter { it.refresh is LoadState.NotLoading }
+                .collect { rvMovieItem.scrollToPosition(0) }
+        }
 
         lifecycleScope.launch {
             movieViewModel.mLstMovies.collectLatest {

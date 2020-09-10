@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import dev.stive.moviereviewer.R
 
 class LoadingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    private val pbFooter = itemView.findViewById<ProgressBar>(R.id.pbFooter)
+    private val pbFooter = itemView.findViewById<ProgressBar>(R.id.pbLoading)
 
     fun bind(status: Boolean) {
         if (status)
