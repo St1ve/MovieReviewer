@@ -10,7 +10,10 @@ import kotlinx.coroutines.flow.Flow
 class MovieViewModel : ViewModel() {
 
     // List of movies
-    var mLstMovies: Flow<PagingData<Movie>> = Pager(PagingConfig(pageSize = PAGE_SIZE)) {
+    var mLstMovies: Flow<PagingData<Movie>> = Pager(PagingConfig(
+        pageSize = PAGE_SIZE,
+        enablePlaceholders = true
+    )) {
         MoviePagedDataSource()
     }.flow.cachedIn(viewModelScope)
 

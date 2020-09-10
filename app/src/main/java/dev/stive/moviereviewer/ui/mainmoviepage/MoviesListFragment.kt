@@ -15,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.snackbar.Snackbar
@@ -35,6 +36,8 @@ class MoviesListFragment : Fragment() {
     private lateinit var srMovieList: SwipeRefreshLayout
     private lateinit var rvMovieItem: RecyclerView
 
+    private var currentPosition = 0
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -46,11 +49,25 @@ class MoviesListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        if (savedInstanceState?.containsKey(KEY_RECYCLERVIEW_POSITION) == true)
+            currentPosition = savedInstanceState.getInt(KEY_RECYCLERVIEW_POSITION)
+
         rvMovieItem = view.findViewById<RecyclerView>(R.id.rvMovies)
         srMovieList = view.findViewById<SwipeRefreshLayout>(R.id.srFragmentMovies)
 
         initRecyclerView(view)
         setRecyclerViewDivider()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        currentPosition =
+            (rvMovieItem.layoutManager as LinearLayoutManager).findFirstCompletelyVisibleItemPosition()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt(KEY_RECYCLERVIEW_POSITION, currentPosition)
     }
 
     private fun setRecyclerViewDivider() {
@@ -117,5 +134,11 @@ class MoviesListFragment : Fragment() {
                 movieAdapter.submitData(it)
             }
         }
+
+        rvMovieItem.scrollToPosition(currentPosition)
+    }
+
+    companion object {
+        private const val KEY_RECYCLERVIEW_POSITION = "recyclerViewPosition"
     }
 }
