@@ -8,12 +8,12 @@
     <TextView
         android:id="@+id/txtTitleMovie"
         style="@style/MovieTitle"
-        android:lines="1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
+        android:lines="1"
         android:textSize="18sp"
         app:layout_constraintEnd_toStartOf="@id/chkAddToFavourite"
         app:layout_constraintHorizontal_chainStyle="packed"
@@ -28,10 +28,9 @@
         android:layout_height="24dp"
         android:layout_marginEnd="20dp"
         android:button="@drawable/selector_add_to_favourite_switcher"
-        app:layout_constraintHorizontal_weight="1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/txtTitleMovie"
-        />
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintTop_toTopOf="@id/txtTitleMovie" />
 
     <ImageView
         android:id="@+id/imgPosterMovie"
@@ -50,8 +49,8 @@
         android:id="@+id/txtDescriptionMovie"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:lines="5"
         android:layout_margin="5dp"
+        android:lines="5"
         android:maxLines="6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/imgPosterMovie"

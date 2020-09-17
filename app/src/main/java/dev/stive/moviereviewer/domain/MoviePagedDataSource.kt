@@ -3,7 +3,6 @@ package dev.stive.moviereviewer.domain
 import androidx.paging.PagingSource
 import dev.stive.moviereviewer.App
 import dev.stive.moviereviewer.data.Movie
-import dev.stive.moviereviewer.network.MovieApiClient
 import retrofit2.HttpException
 import java.io.IOException
 
@@ -14,7 +13,6 @@ class MoviePagedDataSource() : PagingSource<Int, Movie>() {
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Movie> {
         return try {
             val position = params.key ?: FIRST_PAGE
-//            val lstMovies = MovieApiClient.apiClient.getPopularMovies(position).results
             val lstMovies = movieService.getPopularMovies(position).results
 
             LoadResult.Page(

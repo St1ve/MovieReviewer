@@ -21,6 +21,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.snackbar.Snackbar
 import dev.stive.moviereviewer.R
 import dev.stive.moviereviewer.data.Movie
+import dev.stive.moviereviewer.databinding.FragmentMoviesListBinding
 import dev.stive.moviereviewer.ui.recyclerview.adapters.MoviePagedAdapter
 import kotlinx.android.synthetic.main.fragment_movies_list.*
 import kotlinx.coroutines.flow.collect
@@ -33,8 +34,8 @@ class MoviesListFragment : Fragment() {
 
     private val movieViewModel: MovieViewModel by activityViewModels<MovieViewModel>()
 
-    private lateinit var srMovieList: SwipeRefreshLayout
-    private lateinit var rvMovieItem: RecyclerView
+    private var _binding: FragmentMoviesListBinding? = null
+    private val binding get() = _binding!!
 
     private var currentPosition = 0
 
@@ -43,7 +44,8 @@ class MoviesListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_movies_list, container, false)
+        _binding = FragmentMoviesListBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -52,9 +54,6 @@ class MoviesListFragment : Fragment() {
         if (savedInstanceState?.containsKey(KEY_RECYCLERVIEW_POSITION) == true)
             currentPosition = savedInstanceState.getInt(KEY_RECYCLERVIEW_POSITION)
 
-        rvMovieItem = view.findViewById<RecyclerView>(R.id.rvMovies)
-        srMovieList = view.findViewById<SwipeRefreshLayout>(R.id.srFragmentMovies)
-
         initRecyclerView(view)
         setRecyclerViewDivider()
     }
@@ -62,7 +61,13 @@ class MoviesListFragment : Fragment() {
     override fun onStop() {
         super.onStop()
         currentPosition =
-            (rvMovieItem.layoutManager as LinearLayoutManager).findFirstCompletelyVisibleItemPosition()
+            (binding.rvMovies.layoutManager as LinearLayoutManager)
+                .findFirstCompletelyVisibleItemPosition()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -72,7 +77,7 @@ class MoviesListFragment : Fragment() {
 
     private fun setRecyclerViewDivider() {
         if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
-            rvMovieItem.addItemDecoration(
+            binding.rvMovies.addItemDecoration(
                 DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
             )
     }
@@ -96,15 +101,15 @@ class MoviesListFragment : Fragment() {
             }
         )
 
-        srMovieList.setOnRefreshListener {
+        binding.srFragmentMovies.setOnRefreshListener {
             movieAdapter.refresh()
         }
 
         movieAdapter.addLoadStateListener { loadState ->
             pbLoading.isVisible =
-                loadState.source.refresh is LoadState.Loading && rvMovieItem.isEmpty()
-            srMovieList.isRefreshing =
-                loadState.source.refresh is LoadState.Loading && !rvMovieItem.isEmpty()
+                loadState.source.refresh is LoadState.Loading && binding.rvMovies.isEmpty()
+            binding.srFragmentMovies.isRefreshing =
+                loadState.source.refresh is LoadState.Loading && !binding.rvMovies.isEmpty()
 
             val errorState = loadState.refresh as? LoadState.Error
                 ?: loadState.append as? LoadState.Error
@@ -119,14 +124,14 @@ class MoviesListFragment : Fragment() {
             }
         }
 
-        rvMovieItem.adapter = movieAdapter
+        binding.rvMovies.adapter = movieAdapter
 
         // Scroll to top when the list is refreshed from network.
         lifecycleScope.launch {
             movieAdapter.loadStateFlow
                 .distinctUntilChangedBy { it.refresh }
                 .filter { it.refresh is LoadState.NotLoading }
-                .collect { rvMovieItem.scrollToPosition(0) }
+                .collect { binding.rvMovies.scrollToPosition(0) }
         }
 
         lifecycleScope.launch {
@@ -135,7 +140,7 @@ class MoviesListFragment : Fragment() {
             }
         }
 
-        rvMovieItem.scrollToPosition(currentPosition)
+        binding.rvMovies.scrollToPosition(currentPosition)
     }
 
     companion object {
