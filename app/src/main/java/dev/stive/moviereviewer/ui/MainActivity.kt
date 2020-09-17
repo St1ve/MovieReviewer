@@ -18,19 +18,20 @@ import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
 import dev.stive.moviereviewer.R
 import dev.stive.moviereviewer.data.Movie
+import dev.stive.moviereviewer.databinding.ActivityMainBinding
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
 
-    private lateinit var drawer: DrawerLayout
     private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        val toolbar = findViewById<Toolbar>(R.id.toolBarMain)
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.toolBarMain)
 
         navController = Navigation.findNavController(
             this,
@@ -41,15 +42,14 @@ class MainActivity : AppCompatActivity() {
         if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
             setupBottomNavigationMenu(navController)
         } else {
-            drawer = findViewById<DrawerLayout>(R.id.main_drawer_layout)
             val toggle = ActionBarDrawerToggle(
                 this,
-                drawer,
-                toolbar,
+                binding.mainDrawerLayout,
+                binding.toolBarMain,
                 R.string.navigation_drawer_open,
                 R.string.navigation_drawer_closed
             )
-            drawer.addDrawerListener(toggle)
+            binding.mainDrawerLayout.addDrawerListener(toggle)
             toggle.syncState()
         }
     }
