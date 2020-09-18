@@ -16,12 +16,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.snackbar.Snackbar
 import dev.stive.moviereviewer.R
 import dev.stive.moviereviewer.data.Movie
 import dev.stive.moviereviewer.databinding.FragmentMoviesListBinding
+import dev.stive.moviereviewer.ui.recyclerview.adapters.LoadingAdapter
 import dev.stive.moviereviewer.ui.recyclerview.adapters.MoviePagedAdapter
 import kotlinx.android.synthetic.main.fragment_movies_list.*
 import kotlinx.coroutines.flow.collect
@@ -124,7 +123,9 @@ class MoviesListFragment : Fragment() {
             }
         }
 
-        binding.rvMovies.adapter = movieAdapter
+        binding.rvMovies.adapter = movieAdapter.withLoadStateFooter(
+            footer = LoadingAdapter { movieAdapter.retry() }
+        )
 
         // Scroll to top when the list is refreshed from network.
         lifecycleScope.launch {
