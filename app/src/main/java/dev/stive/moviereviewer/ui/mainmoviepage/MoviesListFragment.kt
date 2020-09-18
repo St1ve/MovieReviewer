@@ -109,18 +109,6 @@ class MoviesListFragment : Fragment() {
                 loadState.source.refresh is LoadState.Loading && binding.rvMovies.isEmpty()
             binding.srFragmentMovies.isRefreshing =
                 loadState.source.refresh is LoadState.Loading && !binding.rvMovies.isEmpty()
-
-            val errorState = loadState.refresh as? LoadState.Error
-                ?: loadState.append as? LoadState.Error
-                ?: loadState.prepend as? LoadState.Error
-
-            errorState?.let {
-                Snackbar.make(
-                    view,
-                    "Error: ${it.error}",
-                    Snackbar.LENGTH_LONG
-                ).show()
-            }
         }
 
         binding.rvMovies.adapter = movieAdapter.withLoadStateFooter(
