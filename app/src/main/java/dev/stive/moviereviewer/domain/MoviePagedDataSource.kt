@@ -13,7 +13,8 @@ class MoviePagedDataSource() : PagingSource<Int, Movie>() {
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Movie> {
         return try {
             val position = params.key ?: FIRST_PAGE
-            val lstMovies = movieService.getPopularMovies(position).results
+//            val lstMovies = movieService.getPopularMovies(position).results
+            val lstMovies = movieService.getTopRatedMovies(position).results
 
             LoadResult.Page(
                 data = lstMovies,
@@ -28,7 +29,6 @@ class MoviePagedDataSource() : PagingSource<Int, Movie>() {
     }
 
     companion object {
-        const val PAGE_SIZE = 30
         private const val FIRST_PAGE = 1
     }
 }

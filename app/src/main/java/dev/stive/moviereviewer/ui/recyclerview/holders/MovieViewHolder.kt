@@ -22,7 +22,6 @@ class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bind(
         view: View,
         movie: Movie,
-        position: Int,
         iMovieItemActions: MoviePagedAdapter.IMovieItemActions
     ) {
         titleTv.text = movie.title

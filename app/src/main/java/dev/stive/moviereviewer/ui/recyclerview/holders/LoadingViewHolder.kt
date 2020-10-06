@@ -21,7 +21,7 @@ class LoadingViewHolder(
     fun bind(loadState: LoadState) {
         if (loadState is LoadState.Error)
             binding.errorMsg.text = loadState.error.localizedMessage
-        binding.pbLoading.isVisible = loadState is LoadState.Loading
+        binding.loadingMoviesProgressbar.isVisible = loadState is LoadState.Loading
         binding.retryButton.isVisible = loadState !is LoadState.Loading
         binding.errorMsg.isVisible = loadState !is LoadState.Loading
     }

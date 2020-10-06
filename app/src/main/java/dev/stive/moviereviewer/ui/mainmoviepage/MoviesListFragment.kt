@@ -16,13 +16,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
 import dev.stive.moviereviewer.R
 import dev.stive.moviereviewer.data.Movie
 import dev.stive.moviereviewer.databinding.FragmentMoviesListBinding
 import dev.stive.moviereviewer.ui.recyclerview.adapters.LoadingAdapter
 import dev.stive.moviereviewer.ui.recyclerview.adapters.MoviePagedAdapter
-import kotlinx.android.synthetic.main.fragment_movies_list.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChangedBy
@@ -60,7 +58,7 @@ class MoviesListFragment : Fragment() {
     override fun onStop() {
         super.onStop()
         currentPosition =
-            (binding.rvMovies.layoutManager as LinearLayoutManager)
+            (binding.moviesRecyclerview.layoutManager as LinearLayoutManager)
                 .findFirstCompletelyVisibleItemPosition()
     }
 
@@ -76,7 +74,7 @@ class MoviesListFragment : Fragment() {
 
     private fun setRecyclerViewDivider() {
         if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
-            binding.rvMovies.addItemDecoration(
+            binding.moviesRecyclerview.addItemDecoration(
                 DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
             )
     }
@@ -100,18 +98,27 @@ class MoviesListFragment : Fragment() {
             }
         )
 
-        binding.srFragmentMovies.setOnRefreshListener {
-            movieAdapter.refresh()
-        }
+        binding.moviesSwiperefresh.setOnRefreshListener { movieAdapter.refresh() }
+        binding.retryButton.setOnClickListener { movieAdapter.refresh() }
 
         movieAdapter.addLoadStateListener { loadState ->
-            pbLoading.isVisible =
-                loadState.source.refresh is LoadState.Loading && binding.rvMovies.isEmpty()
-            binding.srFragmentMovies.isRefreshing =
-                loadState.source.refresh is LoadState.Loading && !binding.rvMovies.isEmpty()
+            binding.loadingMoviesProgressbar.isVisible =
+                loadState.source.refresh is LoadState.Loading && binding.moviesRecyclerview.isEmpty()
+            binding.retryButton.isVisible =
+                loadState.source.refresh is LoadState.Error && binding.moviesRecyclerview.isEmpty()
+            binding.errorMsg.isVisible =
+                loadState.source.refresh is LoadState.Error && binding.moviesRecyclerview.isEmpty()
+            binding.moviesSwiperefresh.isRefreshing =
+                loadState.source.refresh is LoadState.Loading && !binding.moviesRecyclerview.isEmpty()
+
+            val errorState = loadState.refresh as? LoadState.Error
+                ?: loadState.append as? LoadState.Error
+                ?: loadState.prepend as? LoadState.Error
+
+            errorState?.let { binding.errorMsg.text = it.error.message }
         }
 
-        binding.rvMovies.adapter = movieAdapter.withLoadStateFooter(
+        binding.moviesRecyclerview.adapter = movieAdapter.withLoadStateFooter(
             footer = LoadingAdapter { movieAdapter.retry() }
         )
 
@@ -120,7 +127,7 @@ class MoviesListFragment : Fragment() {
             movieAdapter.loadStateFlow
                 .distinctUntilChangedBy { it.refresh }
                 .filter { it.refresh is LoadState.NotLoading }
-                .collect { binding.rvMovies.scrollToPosition(0) }
+                .collect { binding.moviesRecyclerview.scrollToPosition(0) }
         }
 
         lifecycleScope.launch {
@@ -129,7 +136,7 @@ class MoviesListFragment : Fragment() {
             }
         }
 
-        binding.rvMovies.scrollToPosition(currentPosition)
+        binding.moviesRecyclerview.scrollToPosition(currentPosition)
     }
 
     companion object {

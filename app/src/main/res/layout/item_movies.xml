@@ -43,6 +43,7 @@
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
         tools:src="@drawable/ic_placeholder_image_black_32dp" />
 
     <TextView
@@ -52,8 +53,8 @@
         android:layout_margin="5dp"
         android:lines="5"
         android:maxLines="6"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/imgPosterMovie"
+        app:layout_constraintStart_toStartOf="@id/btnDetailMovie"
+        app:layout_constraintEnd_toEndOf="@id/btnDetailMovie"
         app:layout_constraintTop_toBottomOf="@id/txtTitleMovie"
         tools:text="Some description here we go agaign a;lskdjf;laksjdfl;kjasd;lkfja;lskdjf;lkasjdf;lkjasl;dkjfa;lskdjf;laskjdf;lkajsd;lfkjasa;slkdjf;laskjdfa;sldkfj;laskjdff;laksdjf;lkajsd;flkjas;lkdfas;ldkfj;alskjdfa;lksdjf;laksjdf;lkaalskjdf;laksjdf;lkajsd;flkjas;ldkfja;lskdjf;laksjdf;lkasjdf;lkjas;ldkfja;lskdjf;laksjdf" />
 
